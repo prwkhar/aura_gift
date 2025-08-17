@@ -441,6 +441,54 @@ nav {
 #product-detail-content .description { margin: 1rem 0 1.5rem 0; line-height: 1.7; }
 
 /* --- FOOTER --- */
+/* --- FOOTER --- */
+footer {
+    text-align: center;
+    padding: 2rem 5%;
+    background: var(--color-primary);
+    color: var(--color-light);
+    margin-top: 2rem;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-contact {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-contact a {
+    color: var(--color-light);
+    text-decoration: none;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-contact a:hover {
+    color: var(--color-accent);
+}
+
+.copyright {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+@media (min-width: 768px) {
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
 footer {
     text-align: center;
     padding: 2rem 5%;
