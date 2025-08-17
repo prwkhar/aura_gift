@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Confirmed - Aura Jewels</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Prata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
             display: flex;
@@ -27,20 +28,35 @@
             padding: 2rem;
         }
         .success-container h1 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             color: var(--color-primary);
             margin-bottom: 1rem;
         }
         .success-container p {
             font-size: 1.2rem;
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.5rem;
             max-width: 600px;
         }
+        .contact-info {
+            font-size: 1rem;
+            color: var(--color-text);
+            margin-bottom: 2.5rem;
+        }
+        .contact-info a {
+            color: var(--color-secondary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
         .success-container .cta-button {
-            background-color: var(--color-primary);
+            background-color: var(--color-secondary);
+            color: var(--color-light);
+            box-shadow: 0 4px 15px rgba(0, 78, 152, 0.4);
         }
          .success-container .cta-button:hover {
-            background-color: #025c2d;
+            background-color: #003D7A;
             transform: translateY(-3px);
         }
     </style>
@@ -59,15 +75,21 @@
             <p>Your order has been placed successfully. We will contact you shortly via phone to confirm the details and proceed with shipping.</p>
             <p class="contact-info">
                 For any questions, feel free to reach out to us at:<br>
-                <i class="fa-solid fa-phone"></i> <a href="tel:+919876543210">+91 98765 43210</a> or 
-                <i class="fa-solid fa-envelope"></i> <a href="mailto:support@aurajewels.com">support@aurajewels.com</a>
+                <i class="fa-solid fa-phone"></i> <a href="tel:6394102248">6394102248</a> or 
+                <i class="fa-solid fa-envelope"></i> <a href="mailto:auragiftzz@gmail.com">auragiftzz@gmail.com</a>
             </p>
             <a href="index.html" class="cta-button">Continue Shopping</a>
         </div>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Aura Jewels & Gifts. All rights reserved.</p>
+    <footer id="about">
+        <div class="footer-content">
+            <p class="copyright">&copy; 2025 Aura Jewels & Gifts. All rights reserved.</p>
+            <div class="footer-contact">
+                <a href="tel:6394102248"><i class="fa-solid fa-phone"></i> 6394102248</a>
+                <a href="mailto:auragiftzz@gmail.com"><i class="fa-solid fa-envelope"></i> auragiftzz@gmail.com</a>
+            </div>
+        </div>
     </footer>
 
 </body>

@@ -1,14 +1,15 @@
 /* --- ROOT VARIABLES & GENERAL STYLES --- */
 :root {
-    --font-primary: 'Montserrat', sans-serif;
-    --font-display: 'Prata', serif;
-    --color-primary: #014421; /* Deep Emerald Green */
-    --color-background: #FDF6E3; /* Warm Cream */
-    --color-accent: #C4A484; /* Soft Brass/Gold */
-    --color-text: #2C3539; /* Dark Slate Grey */
+    --font-primary: 'Hind', sans-serif;
+    --font-display: 'Tiro Devanagari Hindi', serif;
+    --color-primary: #AD1A45; /* Deep Magenta */
+    --color-secondary: #004E98; /* Royal Blue */
+    --color-accent: #FFC72C; /* Marigold/Gold */
+    --color-background: #FFF8E1; /* Light Cream */
+    --color-text: #3D3D3D; /* Dark Grey */
     --color-light: #FFFFFF;
-    --shadow-light: 0 4px 15px rgba(0,0,0,0.06);
-    --shadow-heavy: 0 8px 25px rgba(0,0,0,0.12);
+    --shadow-light: 0 4px 15px rgba(0,0,0,0.08);
+    --shadow-heavy: 0 8px 25px rgba(0,0,0,0.15);
     --border-radius: 8px;
 }
 
@@ -19,7 +20,7 @@
 body {
     font-family: var(--font-primary);
     margin: 0;
-    line-height: 1.6;
+    line-height: 1.7;
     background-color: var(--color-background);
     color: var(--color-text);
     -webkit-font-smoothing: antialiased;
@@ -28,7 +29,7 @@ body {
 
 h1, h2, h3 {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 700;
 }
 
 /* --- HEADER & NAVIGATION --- */
@@ -39,6 +40,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
+    border-bottom: 3px solid var(--color-primary);
 }
 
 nav {
@@ -49,8 +51,8 @@ nav {
 
 .logo {
     font-family: var(--font-display);
-    font-weight: 400;
-    font-size: 2rem;
+    font-weight: 700;
+    font-size: 2.2rem;
     text-decoration: none;
     color: var(--color-primary);
 }
@@ -59,7 +61,7 @@ nav {
     cursor: pointer;
     position: relative;
     font-size: 1.5rem;
-    color: var(--color-primary);
+    color: var(--color-secondary);
 }
 
 #cart-count {
@@ -105,7 +107,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(0deg, rgba(1, 68, 33, 0.7) 0%, rgba(1, 68, 33, 0.4) 100%);
+    background: linear-gradient(0deg, rgba(173, 26, 69, 0.7) 0%, rgba(0, 78, 152, 0.4) 100%);
     z-index: 0;
 }
 
@@ -121,13 +123,13 @@ nav {
 }
 
 .hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
     margin-bottom: 0.5rem;
     text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .hero p {
-    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
     margin-bottom: 2rem;
     font-weight: 400;
     text-shadow: 0 1px 5px rgba(0,0,0,0.5);
@@ -135,7 +137,7 @@ nav {
 
 .cta-button {
     background: var(--color-accent);
-    color: var(--color-light);
+    color: var(--color-text);
     padding: 14px 30px;
     text-decoration: none;
     border-radius: 50px;
@@ -144,13 +146,13 @@ nav {
     border: none;
     cursor: pointer;
     font-size: 1rem;
-    box-shadow: 0 4px 15px rgba(196, 164, 132, 0.4);
+    box-shadow: 0 4px 15px rgba(255, 199, 44, 0.5);
 }
 
 .cta-button:hover {
-    background: #ad8a6e;
+    background: #FFB700;
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(196, 164, 132, 0.5);
+    box-shadow: 0 6px 20px rgba(255, 199, 44, 0.6);
 }
 .cta-button:disabled {
     background-color: #ccc;
@@ -166,7 +168,7 @@ nav {
 }
 
 .product-section h2 {
-    font-size: 2.8rem;
+    font-size: 3rem;
     margin-bottom: 3rem;
     position: relative;
     display: inline-block;
@@ -179,9 +181,10 @@ nav {
     bottom: -10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
+    width: 80px;
+    height: 4px;
     background-color: var(--color-accent);
+    border-radius: 2px;
 }
 
 .product-grid {
@@ -198,6 +201,7 @@ nav {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
+    border: 1px solid #eee;
 }
 
 .product-card:hover {
@@ -233,16 +237,16 @@ nav {
 
 .product-card-info h3 {
     font-family: var(--font-primary);
-    font-weight: 600;
+    font-weight: 700;
     margin: 0 0 0.5rem 0;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: var(--color-text);
 }
 
 .product-card-info p {
     margin: 0 0 1rem 0;
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     color: var(--color-primary);
 }
 
@@ -252,7 +256,7 @@ nav {
 
 .add-to-cart-btn, .quantity-control {
     width: 100%;
-    background: var(--color-primary);
+    background: var(--color-secondary);
     color: white;
     border: none;
     padding: 12px;
@@ -267,7 +271,7 @@ nav {
 }
 
 .add-to-cart-btn:hover {
-    background: #025c2d;
+    background: #003D7A;
 }
 
 .quantity-control {
@@ -276,7 +280,7 @@ nav {
 }
 
 .quantity-control button {
-    background: #025c2d;
+    background: #003D7A;
     color: white;
     border: none;
     width: 30px;
@@ -389,7 +393,7 @@ nav {
 #checkout-form input:focus, #checkout-form textarea:focus {
     outline: none;
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(196, 164, 132, 0.2);
+    box-shadow: 0 0 0 3px rgba(255, 199, 44, 0.3);
 }
 #checkout-form button { width: 100%; margin-top: 1rem; }
 
@@ -436,11 +440,10 @@ nav {
 .slider-btn.prev { left: 10px; }
 .slider-btn.next { right: 10px; }
 
-#product-detail-content h3 { font-size: 2rem; }
-#product-detail-content .price { font-size: 1.6rem; color: var(--color-primary); font-weight: 600; margin: 0.5rem 0; }
-#product-detail-content .description { margin: 1rem 0 1.5rem 0; line-height: 1.7; }
+#product-detail-content h3 { font-size: 2.2rem; color: var(--color-primary); }
+#product-detail-content .price { font-size: 1.8rem; color: var(--color-secondary); font-weight: 700; margin: 0.5rem 0; }
+#product-detail-content .description { margin: 1rem 0 1.5rem 0; line-height: 1.8; }
 
-/* --- FOOTER --- */
 /* --- FOOTER --- */
 footer {
     text-align: center;
@@ -489,10 +492,4 @@ footer {
         justify-content: space-between;
     }
 }
-footer {
-    text-align: center;
-    padding: 2rem 5%;
-    background: var(--color-primary);
-    color: var(--color-light);
-    margin-top: 2rem;
-}
+
