@@ -326,16 +326,18 @@ nav {
 }
 
 .close-button {
-    color: #aaa;
+    color: #f0060689;
     position: absolute;
-    top: 15px;
-    right: 25px;
+    top:1px;
+    right: 8px;
+    border: white;
+    border-radius: 1px;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
     transition: color 0.3s;
 }
-.close-button:hover, .close-button:focus { color: black; }
+.close-button:hover, .close-button:focus { color: rgba(241, 4, 4, 0.899); }
 
 /* --- CART & CHECKOUT SPECIFIC STYLES --- */
 #cart-items {

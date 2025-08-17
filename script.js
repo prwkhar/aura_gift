@@ -232,22 +232,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     checkoutForm.addEventListener('submit', (e) => {
-        const submitBtn = e.target.querySelector('.submit-order-btn');
-        submitBtn.disabled = true;
-        submitBtn.querySelector('.btn-text').style.display = 'none';
-        submitBtn.querySelector('.btn-loader').style.display = 'inline';
+    // 1. Stop the default form action (which causes a page reload/redirect)
+    e.preventDefault(); 
+    
+    const submitBtn = e.target.querySelector('.submit-order-btn');
+    submitBtn.disabled = true;
+    submitBtn.querySelector('.btn-text').style.display = 'none';
+    submitBtn.querySelector('.btn-loader').style.display = 'inline';
 
-        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-        
-        localStorage.setItem('UpharOrderSummary', document.getElementById('order-details').value);
-        // **NEW**: Save the order total for the success page
-        localStorage.setItem('UpharOrderTotal', total.toFixed(2));
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    
+    localStorage.setItem('UpharOrderSummary', document.getElementById('order-details').value);
+    localStorage.setItem('UpharOrderTotal', total.toFixed(2));
 
-        setTimeout(() => {
-            cart = [];
-            localStorage.removeItem('UpharCart');
-            updateCart(); 
-        }, 500);
+    // 2. Clear the cart data immediately
+    cart = [];
+    localStorage.removeItem('UpharCart');
+    updateCart(); 
+
+    // 3. Manually redirect to the success page AFTER everything is done
+    // Make sure 'success.html' is the correct path to your success page.
+    // You can also use checkoutForm.action to get the URL from your HTML form's `action` attribute.
+    window.location.href = 'success.html'; 
     });
     
     // --- SLIDER LOGIC (FIXED) ---
