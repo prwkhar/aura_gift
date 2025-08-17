@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmed - Aura Jewels</title>
+    <title>Order Confirmed - Uphar Jewels</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -100,7 +100,7 @@
 
     <header>
         <nav>
-            <a href="index.html" class="logo">Aura</a>
+            <a href="index.html" class="logo">Uphar</a>
         </nav>
     </header>
 
@@ -128,7 +128,7 @@
 
     <footer id="about">
         <div class="footer-content">
-            <p class="copyright">&copy; 2025 Aura Jewels & Gifts. All rights reserved.</p>
+            <p class="copyright">&copy; 2025 Uphar Jewels & Gifts. All rights reserved.</p>
             <div class="footer-contact">
                 <a href="tel:6394102248"><i class="fa-solid fa-phone"></i> 6394102248</a>
                 <a href="mailto:auragiftzz@gmail.com"><i class="fa-solid fa-envelope"></i> auragiftzz@gmail.com</a>
@@ -139,8 +139,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Get the saved data from localStorage
-            const orderSummary = localStorage.getItem('auraOrderSummary');
-            const orderTotal = localStorage.getItem('auraOrderTotal');
+            const orderSummary = localStorage.getItem('UpharOrderSummary');
+            const orderTotal = localStorage.getItem('UpharOrderTotal');
             const whatsappButton = document.querySelector('.whatsapp-button');
             const totalDisplay = document.getElementById('order-total');
 
@@ -151,7 +151,7 @@
 
             // Update the WhatsApp button link with order details
             if (orderSummary && whatsappButton) {
-                const baseText = "Hello! Here is my payment screenshot for my Aura Jewels order.\n\nMy Order Details:\n";
+                const baseText = "Hello! Here is my payment screenshot for my Uphar Jewels order.\n\nMy Order Details:\n";
                 const fullMessage = baseText + orderSummary;
                 const encodedMessage = encodeURIComponent(fullMessage);
                 
@@ -159,8 +159,8 @@
             }
 
             // Clean up the stored data so it's not used again
-            localStorage.removeItem('auraOrderSummary');
-            localStorage.removeItem('auraOrderTotal');
+            localStorage.removeItem('UpharOrderSummary');
+            localStorage.removeItem('UpharOrderTotal');
         });
     </script>
 

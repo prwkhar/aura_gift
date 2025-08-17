@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- CONFIGURATION & STATE ---
     const googleSheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRk6U3tVlnehAHt_pXJz7-HHbgGyzeFwrHOui0PYCVQY3ubNBjGsU1qH8YVtfOTs3wxSv_YqE-qN5Se/pub?output=csv';
     let products = [];
-    let cart = JSON.parse(localStorage.getItem('auraCart')) || [];
+    let cart = JSON.parse(localStorage.getItem('UpharCart')) || [];
 
     // --- DOM ELEMENTS ---
     const productList = document.getElementById('product-list');
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateCart() {
         updateCartUI();
         updateProductGridUI();
-        localStorage.setItem('auraCart', JSON.stringify(cart));
+        localStorage.setItem('UpharCart', JSON.stringify(cart));
     }
 
     // --- UI UPDATES ---
@@ -239,13 +239,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
         
-        localStorage.setItem('auraOrderSummary', document.getElementById('order-details').value);
+        localStorage.setItem('UpharOrderSummary', document.getElementById('order-details').value);
         // **NEW**: Save the order total for the success page
-        localStorage.setItem('auraOrderTotal', total.toFixed(2));
+        localStorage.setItem('UpharOrderTotal', total.toFixed(2));
 
         setTimeout(() => {
             cart = [];
-            localStorage.removeItem('auraCart');
+            localStorage.removeItem('UpharCart');
             updateCart(); 
         }, 500);
     });
