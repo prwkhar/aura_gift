@@ -17,6 +17,9 @@
         }
         main {
             flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .success-container {
             display: flex;
@@ -24,40 +27,66 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            height: 80vh;
             padding: 2rem;
+            max-width: 700px;
+            width: 100%;
         }
         .success-container h1 {
-            font-size: 3rem;
+            font-size: 2.8rem;
             color: var(--color-primary);
             margin-bottom: 1rem;
         }
         .success-container p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 1.5rem;
             max-width: 600px;
         }
-        .contact-info {
-            font-size: 1rem;
-            color: var(--color-text);
-            margin-bottom: 2.5rem;
+        
+        /* New Payment Section Styles */
+        .payment-section {
+            margin-top: 1.5rem;
+            padding: 2rem;
+            background-color: var(--color-light);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-heavy);
+            border-top: 5px solid var(--color-accent);
+            width: 100%;
         }
-        .contact-info a {
+        .payment-section h2 {
+            font-size: 2rem;
             color: var(--color-secondary);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+        .payment-qr-code {
+            max-width: 250px;
+            width: 100%;
+            height: auto;
+            margin: 0.5rem auto 1.5rem;
+            border: 5px solid white;
+            box-shadow: var(--shadow-light);
+        }
+        .payment-instructions {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        .whatsapp-button {
+            display: inline-block;
+            background-color: #25D366; /* WhatsApp Green */
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
         }
-        .contact-info a:hover {
-            text-decoration: underline;
-        }
-        .success-container .cta-button {
-            background-color: var(--color-secondary);
-            color: var(--color-light);
-            box-shadow: 0 4px 15px rgba(0, 78, 152, 0.4);
-        }
-         .success-container .cta-button:hover {
-            background-color: #003D7A;
+        .whatsapp-button:hover {
+            background-color: #1EBE57;
             transform: translateY(-3px);
+        }
+        .whatsapp-button i {
+            margin-right: 8px;
         }
     </style>
 </head>
@@ -72,13 +101,21 @@
     <main>
         <div class="success-container">
             <h1>Thank You For Your Order!</h1>
-            <p>Your order has been placed successfully. We will contact you shortly via phone to confirm the details and proceed with shipping.</p>
-            <p class="contact-info">
-                For any questions, feel free to reach out to us at:<br>
-                <i class="fa-solid fa-phone"></i> <a href="tel:6394102248">6394102248</a> or 
-                <i class="fa-solid fa-envelope"></i> <a href="mailto:auragiftzz@gmail.com">auragiftzz@gmail.com</a>
-            </p>
-            <a href="index.html" class="cta-button">Continue Shopping</a>
+            <p>Your shipping details have been received. Please complete the final step below to confirm your order.</p>
+
+            <div class="payment-section">
+                <h2>Complete Your Payment</h2>
+                <p class="payment-instructions">
+                    Scan the QR code below with your preferred payment app.
+                </p>
+                <img src="https://res.cloudinary.com/dl1crpys4/image/upload/v1755452138/qr_r9idjj.jpg" alt="Payment QR Code" class="payment-qr-code">
+                <p class="payment-instructions">
+                    After paying, please send a screenshot of the confirmation to our WhatsApp number to finalize your order.
+                </p>
+                <a href="https://wa.me/916394102248?text=Hello!%20Here%20is%20my%20payment%20screenshot%20for%20my%20Aura%20Jewels%20order." class="whatsapp-button" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Send Screenshot
+                </a>
+            </div>
         </div>
     </main>
 
