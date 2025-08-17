@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
         checkoutModal.style.display = 'block';
         let orderSummary = "Items Ordered:\n";
         cart.forEach(item => {
-            orderSummary += `- ${item.name} (x${item.quantity}) - ₹${(item.price * item.quantity).toFixed(2)}\n`;
+            orderSummary += `- (ID: ${item.id}) ${item.name} (x${item.quantity}) - ₹${(item.price * item.quantity).toFixed(2)}\n`;
         });
         const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
         orderSummary += `\nTotal: ₹${total.toFixed(2)}`;
@@ -236,6 +236,13 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
         submitBtn.querySelector('.btn-text').style.display = 'none';
         submitBtn.querySelector('.btn-loader').style.display = 'inline';
+
+        const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        
+        localStorage.setItem('auraOrderSummary', document.getElementById('order-details').value);
+        // **NEW**: Save the order total for the success page
+        localStorage.setItem('auraOrderTotal', total.toFixed(2));
+
         setTimeout(() => {
             cart = [];
             localStorage.removeItem('auraCart');

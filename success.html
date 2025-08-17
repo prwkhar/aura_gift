@@ -56,7 +56,13 @@
             font-size: 2rem;
             color: var(--color-secondary);
             margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+        .payment-total {
+            font-size: 1.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
+            color: var(--color-primary);
         }
         .payment-qr-code {
             max-width: 250px;
@@ -105,6 +111,7 @@
 
             <div class="payment-section">
                 <h2>Complete Your Payment</h2>
+                <h3 class="payment-total">Total Amount: ₹<span id="order-total">0.00</span></h3>
                 <p class="payment-instructions">
                     Scan the QR code below with your preferred payment app.
                 </p>
@@ -128,6 +135,34 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get the saved data from localStorage
+            const orderSummary = localStorage.getItem('auraOrderSummary');
+            const orderTotal = localStorage.getItem('auraOrderTotal');
+            const whatsappButton = document.querySelector('.whatsapp-button');
+            const totalDisplay = document.getElementById('order-total');
+
+            // Display the total amount on the page
+            if (orderTotal && totalDisplay) {
+                totalDisplay.textContent = orderTotal;
+            }
+
+            // Update the WhatsApp button link with order details
+            if (orderSummary && whatsappButton) {
+                const baseText = "Hello! Here is my payment screenshot for my Aura Jewels order.\n\nMy Order Details:\n";
+                const fullMessage = baseText + orderSummary;
+                const encodedMessage = encodeURIComponent(fullMessage);
+                
+                whatsappButton.href = `https://wa.me/916394102248?text=${encodedMessage}`;
+            }
+
+            // Clean up the stored data so it's not used again
+            localStorage.removeItem('auraOrderSummary');
+            localStorage.removeItem('auraOrderTotal');
+        });
+    </script>
 
 </body>
 </html>
