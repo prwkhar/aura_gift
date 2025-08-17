@@ -1,170 +1,204 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Confirmed - Uphar Jewels</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" origin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        main {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .success-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            max-width: 700px;
-            width: 100%;
-        }
-        .success-container h1 {
-            font-size: 2.8rem;
-            color: var(--color-primary);
-            margin-bottom: 1rem;
-        }
-        .success-container p {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            max-width: 600px;
-        }
-        
-        /* New Payment Section Styles */
-        .payment-section {
-            margin-top: 1.5rem;
-            padding: 2rem;
-            background-color: var(--color-light);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-heavy);
-            border-top: 5px solid var(--color-accent);
-            width: 100%;
-        }
-        .payment-section h2 {
-            font-size: 2rem;
-            color: var(--color-secondary);
-            margin-top: 0;
-            margin-bottom: 0.5rem;
-        }
-        .payment-total {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--color-primary);
-        }
-        .payment-qr-code {
-            max-width: 250px;
-            width: 100%;
-            height: auto;
-            margin: 0.5rem auto 1.5rem;
-            border: 5px solid white;
-            box-shadow: var(--shadow-light);
-        }
-        .payment-instructions {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-        }
-        .whatsapp-button {
-            display: inline-block;
-            background-color: #25D366; /* WhatsApp Green */
-            color: white;
-            padding: 12px 25px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-        }
-        .whatsapp-button:hover {
-            background-color: #1EBE57;
-            transform: translateY(-3px);
-        }
-        .whatsapp-button i {
-            margin-right: 8px;
-        }
-    </style>
-</head>
-<body>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Order Confirmed - Uphar Jewels</title>
+     <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap" rel="stylesheet">
+     <style>
+         /* Your existing CSS here */
+         body {
+             display: flex;
+             flex-direction: column;
+             min-height: 100vh;
+         }
+         main {
+             flex-grow: 1;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+         }
+         .success-container {
+             display: flex;
+             flex-direction: column;
+             align-items: center;
+             justify-content: center;
+             text-align: center;
+             padding: 2rem;
+             max-width: 700px;
+             width: 100%;
+         }
+         .success-container h1 {
+             font-size: 2.8rem;
+             color: var(--color-primary);
+             margin-bottom: 1rem;
+         }
+         .success-container p {
+             font-size: 1.1rem;
+             margin-bottom: 1.5rem;
+             max-width: 600px;
+         }
+         .payment-section {
+             margin-top: 1.5rem;
+             padding: 2rem;
+             background-color: var(--color-light);
+             border-radius: var(--border-radius);
+             box-shadow: var(--shadow-heavy);
+             border-top: 5px solid var(--color-accent);
+             width: 100%;
+             display: flex; /* Added flex container */
+             flex-direction: column; /* Stack items vertically */
+             align-items: center; /* Center items horizontally */
+         }
+         .payment-section h2 {
+             font-size: 2rem;
+             color: var(--color-secondary);
+             margin-top: 0;
+             margin-bottom: 0.5rem;
+         }
+         .payment-total {
+             font-size: 1.5rem;
+             font-weight: 700;
+             margin-bottom: 1rem;
+             color: var(--color-primary);
+         }
+         .payment-qr-code {
+             max-width: 250px;
+             width: 100%;
+             height: auto;
+             margin: 0.5rem auto 1rem; /* Adjusted margin */
+             border: 5px solid white;
+             box-shadow: var(--shadow-light);
+         }
+         .payment-instructions {
+             font-size: 1.1rem;
+             margin-bottom: 1rem; /* Adjusted margin */
+         }
+         .cta-button {
+             display: inline-block;
+             background-color: #4a4a4a; /* Using a default color */
+             color: white;
+             padding: 12px 25px;
+             border-radius: 50px;
+             text-decoration: none;
+             font-weight: 700;
+             transition: all 0.3s ease;
+             margin-bottom: 1rem; /* Adjusted margin */
+         }
+         .cta-button:hover {
+             background-color: #333; /* Using a default color */
+             transform: translateY(-3px);
+         }
+         .cta-button i {
+             margin-right: 8px;
+         }
+         .whatsapp-button {
+             display: inline-block;
+             background-color: #25D366;
+             color: white;
+             padding: 12px 25px;
+             border-radius: 50px;
+             text-decoration: none;
+             font-weight: 700;
+             transition: all 0.3s ease;
+             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+         }
+         .whatsapp-button:hover {
+             background-color: #1EBE57;
+             transform: translateY(-3px);
+         }
+         .whatsapp-button i {
+             margin-right: 8px;
+         }
+     </style>
+ </head>
+ <body>
+ 
+     <header>
+         <nav>
+             <a href="#" class="logo">
+                 <img src="logo.svg" alt="Uphar Logo">
+             </a>
+         </nav>
+     </header>
+ 
+     <main>
+         <div class="success-container">
+             <h1>Thank You For Your Order!</h1>
+             <p>Your shipping details have been received. Please complete the final step below to confirm your order.</p>
+ 
+             <div class="payment-section">
+                 <h2>Complete Your Payment</h2>
+                 <h3 class="payment-total">Total Amount: ₹<span id="order-total">0.00</span></h3>
+                 <p class="payment-instructions">
+                     Scan the QR code or click the button below to pay.
+                 </p>
+                 <img id="qr-code-img" src="" alt="Payment QR Code" class="payment-qr-code">
+                 
+                 <a id="upi-payment-link" href="#" class="cta-button">
+                     <i class="fas fa-mobile-alt"></i> Pay with UPI App
+                 </a>
+ 
+                 <p class="payment-instructions">
+                     After paying, please send a screenshot of the confirmation to our WhatsApp number to finalize your order.
+                 </p>
+                 <a href="#" class="whatsapp-button" target="_blank">
+                     <i class="fab fa-whatsapp"></i> Send Screenshot
+                 </a>
+             </div>
+         </div>
+     </main>
+ 
+     <footer id="about">
+         </footer>
+ 
+     <script>
+     document.addEventListener('DOMContentLoaded', () => {
+         // --- CONFIGURATION: CHANGE THESE VALUES ---
+         const yourUpiId = 'YOUR_UPI_ID@oksbi'; // ⚠️ IMPORTANT: Replace with your UPI ID
+         const yourName = 'Uphar Jewels'; // Replace with your name or business name
+         // ------------------------------------------
+ 
+         const orderSummary = localStorage.getItem('UpharOrderSummary');
+         const orderTotal = localStorage.getItem('UpharOrderTotal');
+         
+         const totalDisplay = document.getElementById('order-total');
+         const qrCodeImg = document.getElementById('qr-code-img');
+         const upiPaymentLink = document.getElementById('upi-payment-link');
+         const whatsappButton = document.querySelector('.whatsapp-button');
+ 
+         if (orderTotal && totalDisplay) {
+    totalDisplay.textContent = orderTotal;
 
-    <header>
-        <nav>
-            <a href="#" class="logo">
-                <img src="logo.svg" alt="Uphar Logo">
-            </a>
-        </nav>
-    </header>
+    const transactionNote = "Payment for Uphar Jewels Order";
+    // FIX: Added quotes around the payee name "Prakha Agarwal"
+    const upiUrl = `upi://pay?pa=${"prakharagarwal1434-1@oksbi"}&pn=${encodeURIComponent('Prakha Agarwal')}&am=${orderTotal}&tn=${encodeURIComponent(transactionNote)}&cu=INR`;
 
-    <main>
-        <div class="success-container">
-            <h1>Thank You For Your Order!</h1>
-            <p>Your shipping details have been received. Please complete the final step below to confirm your order.</p>
-
-            <div class="payment-section">
-                <h2>Complete Your Payment</h2>
-                <h3 class="payment-total">Total Amount: ₹<span id="order-total">0.00</span></h3>
-                <p class="payment-instructions">
-                    Scan the QR code below with your preferred payment app.
-                </p>
-                <img src="https://res.cloudinary.com/dl1crpys4/image/upload/v1755452138/qr_r9idjj.jpg" alt="Payment QR Code" class="payment-qr-code">
-                <p class="payment-instructions">
-                    After paying, please send a screenshot of the confirmation to our WhatsApp number to finalize your order.
-                </p>
-                <a href="https://wa.me/916394102248?text=Hello!%20Here%20is%20my%20payment%20screenshot%20for%20my%20Aura%20Jewels%20order." class="whatsapp-button" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Send Screenshot
-                </a>
-            </div>
-        </div>
-    </main>
-
-    <footer id="about">
-        <div class="footer-content">
-            <p class="copyright">&copy; 2025 Uphar Jewels & Gifts. All rights reserved.</p>
-            <div class="footer-contact">
-                <a href="tel:6394102248"><i class="fa-solid fa-phone"></i> 6394102248</a>
-                <a href="mailto:auragiftzz@gmail.com"><i class="fa-solid fa-envelope"></i> auragiftzz@gmail.com</a>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Get the saved data from localStorage
-            const orderSummary = localStorage.getItem('UpharOrderSummary');
-            const orderTotal = localStorage.getItem('UpharOrderTotal');
-            const whatsappButton = document.querySelector('.whatsapp-button');
-            const totalDisplay = document.getElementById('order-total');
-
-            // Display the total amount on the page
-            if (orderTotal && totalDisplay) {
-                totalDisplay.textContent = orderTotal;
-            }
-
-            // Update the WhatsApp button link with order details
-            if (orderSummary && whatsappButton) {
-                const baseText = "Hello! Here is my payment screenshot for my Uphar Jewels order.\n\nMy Order Details:\n";
-                const fullMessage = baseText + orderSummary;
-                const encodedMessage = encodeURIComponent(fullMessage);
-                
-                whatsappButton.href = `https://wa.me/916394102248?text=${encodedMessage}`;
-            }
-
-            // Clean up the stored data so it's not used again
-            localStorage.removeItem('UpharOrderSummary');
-            localStorage.removeItem('UpharOrderTotal');
-        });
-    </script>
-
-</body>
-</html>
+    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+    
+    if (qrCodeImg) {
+        qrCodeImg.src = qrApiUrl;
+    }
+    if (upiPaymentLink) {
+        upiPaymentLink.href = upiUrl;
+    }
+}
+ 
+         if (orderSummary && whatsappButton) {
+             const baseText = "Hello! Here is my payment screenshot for my Uphar Jewels order.\n\nMy Order Details:\n";
+             const fullMessage = baseText + orderSummary;
+             const encodedMessage = encodeURIComponent(fullMessage);
+             whatsappButton.href = `https://wa.me/916394102248?text=${encodedMessage}`;
+         }
+ 
+         localStorage.removeItem('UpharOrderSummary');
+         localStorage.removeItem('UpharOrderTotal');
+     });
+     </script>
+ 
+ </body>
+ </html>
