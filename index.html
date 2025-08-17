@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Jewels & Gifts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="#" class="logo">Aura</a>
+            <!-- <div class="nav-links">
+                <a href="#shop">Shop</a>
+                <a href="#about">About</a> -->
+                <div id="cart-icon" class="cart-icon">
+                    🛒 <span id="cart-count">0</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <video playsinline autoplay muted loop id="hero-video">
+            <source src="https://res.cloudinary.com/dijtya7zg/video/upload/v1745954780/background_pb69nz.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+            </video>
+            <div class="hero-content">
+                <h1>Elegance in Every Piece</h1>
+                <p>Discover our exclusive collection of fine jewellery and unique gifts.</p>
+                <a href="#shop" class="cta-button">Shop Now</a>
+            </div>
+        </section>
+
+        <section id="shop" class="product-section">
+            <h2>Our Collection</h2>
+            <div id="product-list" class="product-grid">
+                </div>
+        </section>
+    </main>
+    
+    <div id="product-detail-modal" class="modal">
+        <div class="modal-content" id="product-detail-content">
+            </div>
+    </div>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-cart">&times;</span>
+            <h2>Your Cart</h2>
+            <div id="cart-items"></div>
+            <div class="cart-summary">
+                <strong>Total: ₹<span id="cart-total">0.00</span></strong>
+            </div>
+            <button id="checkout-btn" class="cta-button">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-checkout">&times;</span>
+            <h2>Shipping Information</h2>
+            <form id="checkout-form" action="https://api.web3forms.com/submit" method="POST">
+                
+                <input type="hidden" name="access_key" value="0643cf2c-7349-4d3c-93b0-18ca317ab65b">
+                <input type="hidden" name="subject" value="New Order from Aura Jewels!">
+                <input type="hidden" id="order-details" name="order_details" value="">
+                <input type="hidden" name="from_name" value="Aura Jewels Order">
+                <input type="hidden" name="redirect" value="success.html"> <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">10-Digit Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address (House No, Building, Street)</label>
+                    <textarea id="address" name="address" rows="2" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="landmark">Landmark</label>
+                        <input type="text" id="landmark" name="landmark">
+                    </div>
+                    <div class="form-group">
+                        <label for="pincode">Pincode</label>
+                        <input type="text" id="pincode" name="pincode" required pattern="[0-9]{6}" title="Please enter a valid 6-digit pincode">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <input type="text" id="state" name="state" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="cta-button">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <footer id="about">
+        <p>&copy; 2025 Aura Jewels & Gifts. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

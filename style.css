@@ -1,0 +1,352 @@
+/* General Body Styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Header and Navigation */
+header {
+    background: #fff;
+    padding: 1rem 5%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.8rem;
+    text-decoration: none;
+    color: #333;
+}
+
+.nav-links a {
+    margin: 0 1rem;
+    text-decoration: none;
+    color: #555;
+    display: flex-row;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #d4af37; /* Gold color */
+}
+
+.cart-icon {
+    cursor: pointer;
+    position: relative;
+    font-size: 1.5rem;
+}
+
+#cart-count {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    background: #d4af37;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* --- NEW HERO VIDEO STYLES --- */
+
+/* The main container */
+.hero {
+    height: 80vh;
+    position: relative; /* This is crucial for positioning the video and overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    overflow: hidden; /* Hides any part of the video that might stick out */
+}
+
+/* The video element itself */
+#hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This makes the video cover the area without stretching */
+    z-index: -1; /* Puts the video behind everything else */
+}
+
+/* Dark overlay to make text readable */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* This creates the dark tint */
+    z-index: 0; /* Puts the overlay on top of the video but behind the text */
+}
+
+/* The text content */
+.hero-content {
+    position: relative; /* Ensures this stays on top of the overlay */
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    background: #d4af37;
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 700;
+    transition: background 0.3s;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.cta-button:hover {
+    background: #b89a30;
+}
+
+/* Product Section */
+.product-section {
+    padding: 4rem 5%;
+    text-align: center;
+}
+
+.product-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.product-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.product-card img, .slider-image {
+    width: 100%;
+    height: 250px;
+    /* This is the key change: it fits the ENTIRE image inside the box */
+    object-fit: contain; 
+    /* This adds a subtle background to the image area, so any empty space looks clean */
+    background-color: #f7f7f7; 
+}
+
+.product-card-info {
+    padding: 1.5rem;
+    text-align: left;
+}
+
+.product-card-info h3 {
+    margin: 0 0 0.5rem 0;
+}
+
+.product-card-info p {
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #d4af37;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+    background: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background: #555;
+}
+
+/* Modals (Cart, Checkout, Product Detail) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 10px;
+    position: relative;
+    animation: slide-down 0.4s ease-out;
+}
+
+@keyframes slide-down {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover, .close-button:focus {
+    color: black;
+}
+
+/* Cart Styles */
+#cart-items {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+.remove-item-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.cart-summary {
+    text-align: right;
+    margin: 1rem 0;
+    font-size: 1.2rem;
+}
+
+/* Checkout Form Styles */
+#checkout-form .form-row {
+    display: flex;
+    gap: 1rem;
+}
+#checkout-form .form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+#checkout-form label {
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+#checkout-form input, #checkout-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Important for flexbox */
+}
+#checkout-form button {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* Image Slider Styles */
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Adjust as needed */
+    overflow: hidden;
+    border-radius: 5px;
+}
+.slider-wrapper {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+.slider-image {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 1.5rem;
+}
+.slider-btn.prev { left: 10px; }
+.slider-btn.next { right: 10px; }
+
+/* Product Detail Modal Content */
+#product-detail-content h3 { font-size: 1.8rem; }
+#product-detail-content .price { font-size: 1.5rem; color: #d4af37; font-weight: 600; }
+#product-detail-content .description { margin: 1rem 0; }
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 5%;
+    background: #333;
+    color: white;
+    margin-top: 2rem;
+}
