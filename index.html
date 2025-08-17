@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aura Jewels & Gifts</title>
+    <title>Aura │ Jewels & Gifts</title>
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Prata&display=swap" rel="stylesheet">
+    <!-- Your Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <nav>
             <a href="#" class="logo">Aura</a>
-            <!-- <div class="nav-links">
-                <a href="#shop">Shop</a>
-                <a href="#about">About</a> -->
-                <div id="cart-icon" class="cart-icon">
-                    🛒 <span id="cart-count">0</span>
-                </div>
+            <div id="cart-icon" class="cart-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cart-count">0</span>
             </div>
         </nav>
     </header>
@@ -28,8 +28,8 @@
     <main>
         <section class="hero">
             <video playsinline autoplay muted loop id="hero-video">
-            <source src="https://res.cloudinary.com/dijtya7zg/video/upload/v1745954780/background_pb69nz.mp4" type="video/mp4">
-            Your browser does not support the video tag.
+                <source src="https://res.cloudinary.com/dijtya7zg/video/upload/v1745954780/background_pb69nz.mp4" type="video/mp4">
+                Your browser does not support the video tag.
             </video>
             <div class="hero-content">
                 <h1>Elegance in Every Piece</h1>
@@ -41,15 +41,19 @@
         <section id="shop" class="product-section">
             <h2>Our Collection</h2>
             <div id="product-list" class="product-grid">
-                </div>
+                <!-- Products will be loaded here by JavaScript -->
+            </div>
         </section>
     </main>
     
+    <!-- Product Detail Modal -->
     <div id="product-detail-modal" class="modal">
         <div class="modal-content" id="product-detail-content">
-            </div>
+            <!-- Product details will be loaded here -->
+        </div>
     </div>
 
+    <!-- Cart Modal -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <span class="close-button" id="close-cart">&times;</span>
@@ -62,6 +66,7 @@
         </div>
     </div>
 
+    <!-- Checkout Modal -->
     <div id="checkout-modal" class="modal">
         <div class="modal-content">
             <span class="close-button" id="close-checkout">&times;</span>
@@ -72,7 +77,11 @@
                 <input type="hidden" name="subject" value="New Order from Aura Jewels!">
                 <input type="hidden" id="order-details" name="order_details" value="">
                 <input type="hidden" name="from_name" value="Aura Jewels Order">
-                <input type="hidden" name="redirect" value="success.html"> <div class="form-row">
+                <!-- This relative path works if success.html is in the same folder. -->
+                <!-- When you go live, change this to your full website URL e.g., https://www.aurajewels.com/success.html -->
+                <input type="hidden" name="redirect" value="success.html"> 
+
+                <div class="form-row">
                     <div class="form-group">
                         <label for="name">Full Name</label>
                         <input type="text" id="name" name="name" required>
@@ -90,12 +99,12 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="landmark">Landmark</label>
-                        <input type="text" id="landmark" name="landmark">
-                    </div>
-                    <div class="form-group">
                         <label for="pincode">Pincode</label>
                         <input type="text" id="pincode" name="pincode" required pattern="[0-9]{6}" title="Please enter a valid 6-digit pincode">
+                    </div>
+                     <div class="form-group">
+                        <label for="landmark">Landmark</label>
+                        <input type="text" id="landmark" name="landmark">
                     </div>
                 </div>
                 
@@ -110,7 +119,10 @@
                     </div>
                 </div>
 
-                <button type="submit" class="cta-button">Place Order</button>
+                <button type="submit" class="cta-button submit-order-btn">
+                    <span class="btn-text">Place Order</span>
+                    <span class="btn-loader" style="display: none;">Placing...</span>
+                </button>
             </form>
         </div>
     </div>
