@@ -1,12 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- 1. VISUAL EFFECTS (Three.js, Cursor, Floating) ---
+    // --- 1. VISUAL EFFECTS ---
 
-    // Custom Cursor
+    // Custom Cursor (Desktop Only)
     const cursorDot = document.querySelector('.custom-cursor-dot');
     const cursorOutline = document.querySelector('.custom-cursor-outline');
     
-    if (cursorDot && cursorOutline) {
+    // Only activate cursor logic if elements exist (screen > 768px)
+    if (cursorDot && cursorOutline && window.matchMedia("(min-width: 768px)").matches) {
         window.addEventListener('mousemove', e => {
             cursorDot.style.left = `${e.clientX}px`;
             cursorDot.style.top = `${e.clientY}px`;
@@ -20,15 +21,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Floating Background Elements
     const floatingContainer = document.getElementById('floating-container');
     if (floatingContainer) {
-        const elements = ['💖', '🎁', '✨', '🌸', '🎀', '🧸'];
-        for (let i = 0; i < 20; i++) {
+        const elements = ['💖', '🎁', '✨', '🌸', '🎀', '🧸', '🍬', '🦄'];
+        // Reduce count on mobile for performance
+        const count = window.innerWidth < 768 ? 12 : 25;
+        
+        for (let i = 0; i < count; i++) {
             const el = document.createElement('div');
             el.className = 'floating-element';
             el.innerText = elements[Math.floor(Math.random() * elements.length)];
             el.style.left = `${Math.random() * 100}vw`;
-            el.style.animationDuration = `${Math.random() * 10 + 15}s`;
+            el.style.animationDuration = `${Math.random() * 15 + 15}s`;
             el.style.animationDelay = `${Math.random() * 10}s`;
-            el.style.fontSize = `${Math.random() * 15 + 15}px`;
+            el.style.fontSize = `${Math.random() * 20 + 10}px`;
+            el.style.opacity = Math.random() * 0.4 + 0.1;
             floatingContainer.appendChild(el);
         }
     }
@@ -43,85 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Three.js 3D Gift Box
-    const canvasContainer = document.getElementById('hero-3d-canvas');
-    if (canvasContainer && typeof THREE !== 'undefined') {
-        let scene, camera, renderer, giftBox, pivot;
-        let isLidOpening = false;
-
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, canvasContainer.clientWidth / canvasContainer.clientHeight, 0.1, 1000);
-        camera.position.z = 5;
-
-        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setSize(canvasContainer.clientWidth, canvasContainer.clientHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        canvasContainer.appendChild(renderer.domElement);
-
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-        scene.add(ambientLight);
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
-        dirLight.position.set(5, 10, 7.5);
-        scene.add(dirLight);
-
-        const boxMaterial = new THREE.MeshStandardMaterial({ color: 0xFDE2E4 }); 
-        const ribbonMaterial = new THREE.MeshStandardMaterial({ color: 0xF7A8B8 }); 
-
-        const boxBase = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1.5, 2.5), boxMaterial);
-        boxBase.position.y = -0.75;
-
-        const hRibbon = new THREE.Mesh(new THREE.BoxGeometry(2.55, 1.55, 0.3), ribbonMaterial);
-        const vRibbon = new THREE.Mesh(new THREE.BoxGeometry(0.3, 1.55, 2.55), ribbonMaterial);
-        boxBase.add(hRibbon);
-        boxBase.add(vRibbon);
-
-        const lidMesh = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.5, 2.6), boxMaterial);
-        lidMesh.position.y = 0.25;
-
-        const lidHRibbon = new THREE.Mesh(new THREE.BoxGeometry(2.65, 0.55, 0.3), ribbonMaterial);
-        const lidVRibbon = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.55, 2.65), ribbonMaterial);
-        lidMesh.add(lidHRibbon);
-        lidMesh.add(lidVRibbon);
-
-        pivot = new THREE.Object3D();
-        pivot.add(lidMesh);
-        pivot.position.y = 0; 
-
-        giftBox = new THREE.Group();
-        giftBox.add(boxBase);
-        giftBox.add(pivot);
-        scene.add(giftBox);
-
-        function animate3D() {
-            requestAnimationFrame(animate3D);
-            if (giftBox && !isLidOpening) {
-                giftBox.rotation.y += 0.005;
-                giftBox.rotation.x = Math.sin(Date.now() * 0.001) * 0.1;
-            }
-            if (isLidOpening && pivot.rotation.z > -Math.PI / 2) {
-                pivot.rotation.z -= 0.05;
-                pivot.position.x -= 0.03;
-                pivot.position.y += 0.01;
-            }
-            renderer.render(scene, camera);
-        }
-        animate3D();
-
-        canvasContainer.addEventListener('click', () => { isLidOpening = true; });
-        window.addEventListener('resize', () => {
-            camera.aspect = canvasContainer.clientWidth / canvasContainer.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(canvasContainer.clientWidth, canvasContainer.clientHeight);
-        });
-    }
-
 
     // --- 2. E-COMMERCE LOGIC ---
 
     const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRk6U3tVlnehAHt_pXJz7-HHbgGyzeFwrHOui0PYCVQY3ubNBjGsU1qH8YVtfOTs3wxSv_YqE-qN5Se/pub?output=csv';
 
     let products = [];
-    let cart = JSON.parse(localStorage.getItem('UpharCart')) || [];
+    // Changed Storage Key to TreviaCart
+    let cart = JSON.parse(localStorage.getItem('TreviaCart')) || [];
 
     // Elements
     const productListEl = document.getElementById('product-list');
@@ -143,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             updateCartUI();
         } catch (err) {
             console.error(err);
-            productListEl.innerHTML = `<p class="col-span-full text-center text-red-400">Could not load treasures. Please refresh!</p>`;
+            productListEl.innerHTML = `<p class="col-span-full text-center text-red-400 font-bold">Could not load treasures. Please refresh! 🦄</p>`;
         }
     }
 
@@ -170,18 +104,24 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderProductGrid() {
         if (!productListEl) return;
         productListEl.innerHTML = products.map(p => `
-            <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 hover:rotate-6  border border-pink-100 hover:border-black  clickable open-product-modal group" data-id="${p.id}">
-                <div class="h-56 overflow-hidden relative">
+            <div class="glass-card flex flex-col h-full overflow-hidden relative group clickable open-product-modal cursor-pointer" data-id="${p.id}">
+                <div class="h-48 md:h-60 overflow-hidden relative m-2 md:m-3 rounded-[1.2rem] shadow-inner bg-white">
                     <img src="${p.images[0]}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
+                    
+                    <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                         <span class="bg-white text-pink-500 px-3 py-1 rounded-full text-xs font-bold shadow-sm transform translate-y-4 group-hover:translate-y-0 transition-transform">Quick View</span>
+                    </div>
                 </div>
-                <div class="p-6">
-                    <h3 class="font-bold text-lg text-gray-800">${p.name}</h3>
-                    <p class="text-sm text-gray-400 mt-1 truncate">${p.description}</p>
-                    <div class="flex justify-between items-center mt-4">
-                        <span class="text-xl font-bold text-pink-500 font-pacifico">₹${p.price}</span>
-                        <button class="bg-pink-100 text-pink-500 hover:bg-pink-500 hover:text-white px-3 py-1 rounded-full text-sm font-bold transition-colors">
-                            View
-                        </button>
+
+                <div class="px-4 pb-4 flex-grow flex flex-col">
+                    <h3 class="font-bold text-base md:text-lg text-gray-800 leading-tight mb-1 font-chunky line-clamp-1">${p.name}</h3>
+                    <p class="text-xs md:text-sm text-gray-500 line-clamp-2 mb-3">${p.description}</p>
+                    
+                    <div class="mt-auto flex justify-between items-center">
+                        <span class="text-lg md:text-xl font-bold text-pink-500 font-pacifico">₹${p.price}</span>
+                        <div class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -205,7 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const sliderContainer = document.getElementById('modal-slider-container');
         if (product.images.length > 0) {
-            sliderContainer.innerHTML = `<img src="${product.images[0]}" class="w-full h-full object-cover">`;
+            // Using object-contain so full image is seen on mobile
+            sliderContainer.innerHTML = `<img src="${product.images[0]}" class="w-full h-full object-cover md:object-cover rounded-xl">`;
         }
 
         productModal.classList.add('active');
@@ -234,12 +175,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const item = cart.find(i => i.uniqueId === uniqueId);
         if (item) {
             item.message = newMessage;
-            saveCart(); // This calls updateCartUI(), which re-renders the list in "View" mode
+            saveCart(); 
         }
     }
 
     function saveCart() {
-        localStorage.setItem('UpharCart', JSON.stringify(cart));
+        localStorage.setItem('TreviaCart', JSON.stringify(cart));
         updateCartUI();
     }
 
@@ -251,7 +192,11 @@ document.addEventListener('DOMContentLoaded', () => {
         cartTotalEl.innerText = total.toFixed(2);
 
         if (cart.length === 0) {
-            cartItemsContainer.innerHTML = `<div class="text-center py-10 opacity-60"><p>Your basket is empty!</p></div>`;
+            cartItemsContainer.innerHTML = `
+                <div class="text-center py-10 opacity-60 flex flex-col items-center">
+                    <i class="fa-solid fa-basket-shopping text-4xl mb-3 text-pink-300"></i>
+                    <p class="font-bold text-gray-400">Basket is empty!</p>
+                </div>`;
             const checkoutBtn = document.getElementById('checkout-btn');
             if (checkoutBtn) checkoutBtn.classList.add('opacity-50', 'pointer-events-none');
         } else {
@@ -259,39 +204,31 @@ document.addEventListener('DOMContentLoaded', () => {
             if (checkoutBtn) checkoutBtn.classList.remove('opacity-50', 'pointer-events-none');
             
             cartItemsContainer.innerHTML = cart.map(item => `
-                <div class="gap-4 border-b border-pink-300 pb-4 last:border-0 relative mt-2">
-                    <div>
-                        <button class="absolute top-0 -right-2 text-gray-400 hover:text-red-500 remove-item-btn w-6 h-6 flex items-center justify-center clickable" data-unique-id="${item.uniqueId}">×</button>
-                    </div>
+                <div class="bg-white rounded-2xl p-3 shadow-sm border border-gray-100 relative group">
+                    
+                    <button class="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full text-gray-400 hover:text-red-500 hover:bg-red-50 shadow-md flex items-center justify-center clickable transition-all remove-item-btn z-10" data-unique-id="${item.uniqueId}">
+                        <i class="fa-solid fa-times text-xs pointer-events-none"></i>
+                    </button>
                     
                     <div class="flex gap-3">
-                        <img src="${item.images[0]}" class="w-16 h-16 rounded-xl object-cover border border-pink-100">
-                        <div class="flex-1">
-                            <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-gray-800 text-sm w-2/3 leading-tight">${item.name}</h4>
-                                <span class="font-bold text-pink-500 text-sm">₹${item.price}</span>
-                            </div>
+                        <img src="${item.images[0]}" class="w-16 h-16 rounded-xl object-cover border border-pink-50 shrink-0">
+                        <div class="flex-1 flex flex-col justify-center min-w-0">
+                            <h4 class="font-bold text-gray-800 text-sm leading-tight mb-1 font-chunky truncate">${item.name}</h4>
+                            <span class="font-bold text-pink-500 text-sm">₹${item.price}</span>
                             
-                            <div id="view-mode-${item.uniqueId}" class="mt-2 text-xs flex justify-between items-center group">
-                                <p class="text-gray-500 italic truncate pr-2">
-                                    ${item.message ? `Note: "${item.message}"` : 'No note added'}
+                            <div id="view-mode-${item.uniqueId}" class="mt-2 text-xs flex justify-between items-center bg-gray-50 rounded-lg p-1.5 border border-gray-100">
+                                <p class="text-gray-500 italic truncate pr-2 w-full">
+                                    ${item.message ? `<i class="fa-solid fa-pen-nib text-pink-300 mr-1"></i>${item.message}` : 'Add note...'}
                                 </p>
-                                <button class="edit-note-btn text-pink-500 underline hover:text-pink-700 text-xs font-bold whitespace-nowrap" 
-                                        data-unique-id="${item.uniqueId}">
+                                <button class="edit-note-btn text-pink-400 hover:text-pink-600 px-2 font-bold whitespace-nowrap" data-unique-id="${item.uniqueId}">
                                     Edit
                                 </button>
                             </div>
 
-                            <div id="edit-mode-${item.uniqueId}" class="hidden flex items-center gap-2 mt-2">
-                                <input type="text" 
-                                    class="cart-note-input text-xs py-1 px-2 bg-pink-50 rounded-lg w-full focus:outline-none border border-transparent focus:border-pink-300" 
-                                    placeholder="Add note..." 
-                                    value="${item.message}" 
-                                    id="input-${item.uniqueId}">
-                                
-                                <button class="save-note-btn bg-pink-500 hover:bg-pink-600 text-white text-xs px-3 py-1.5 rounded-lg transition-colors shadow-sm"
-                                    data-unique-id="${item.uniqueId}">
-                                    Save
+                            <div id="edit-mode-${item.uniqueId}" class="hidden flex items-center gap-1 mt-2">
+                                <input type="text" class="cart-note-input text-xs py-1.5 px-2 bg-white rounded-lg w-full focus:outline-none border-2 border-pink-100 focus:border-pink-300 text-gray-600" placeholder="Note..." value="${item.message}" id="input-${item.uniqueId}">
+                                <button class="save-note-btn bg-pink-500 hover:bg-pink-600 text-white w-7 h-7 shrink-0 rounded-lg flex items-center justify-center shadow-sm transition-colors" data-unique-id="${item.uniqueId}">
+                                    <i class="fa-solid fa-check text-xs pointer-events-none"></i>
                                 </button>
                             </div>
 
@@ -306,60 +243,52 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', (e) => {
         const target = e.target;
 
-        // Open Product Modal
         if (target.closest('.open-product-modal')) {
             const id = parseInt(target.closest('.open-product-modal').dataset.id);
             openProductModal(id);
         }
 
-        // Close Modals
         if (target.classList.contains('close-modal') || target.classList.contains('modal')) {
             document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
         }
 
-        // Add to Cart from Modal
         if (target.id === 'modal-add-btn') {
             const id = parseInt(target.dataset.id);
             const msg = document.getElementById('modal-custom-note').value;
             addToCart(id, msg);
         }
 
-        // Remove Item from Cart
         if (target.classList.contains('remove-item-btn')) {
             const uid = target.dataset.uniqueId;
             removeFromCart(uid);
         }
 
-        // --- EDIT BUTTON LOGIC (Switch to Edit Mode) ---
-        if (target.classList.contains('edit-note-btn')) {
-            const uid = target.dataset.uniqueId;
+        if (target.closest('.edit-note-btn')) {
+            const btn = target.closest('.edit-note-btn');
+            const uid = btn.dataset.uniqueId;
             const viewMode = document.getElementById(`view-mode-${uid}`);
             const editMode = document.getElementById(`edit-mode-${uid}`);
             
-            // Toggle visibility
             if(viewMode && editMode) {
                 viewMode.classList.add('hidden');
                 editMode.classList.remove('hidden');
             }
         }
 
-        // --- SAVE BUTTON LOGIC (Save & Switch back to View Mode) ---
-        if (target.classList.contains('save-note-btn')) {
-            const uid = target.dataset.uniqueId;
+        if (target.closest('.save-note-btn')) {
+            const btn = target.closest('.save-note-btn');
+            const uid = btn.dataset.uniqueId;
             const inputField = document.getElementById(`input-${uid}`);
             
             if (inputField) {
-                // Update data and refresh UI (which resets to view mode with new text)
                 updateCartMessage(uid, inputField.value);
             }
         }
 
-        // Open Cart
         if (target.closest('#cart-icon')) {
             cartModal.classList.add('active');
         }
 
-        // Proceed to Checkout
         if (target.id === 'checkout-btn') {
             cartModal.classList.remove('active');
             checkoutModal.classList.add('active');
@@ -376,10 +305,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const btnLoader = btn.querySelector('.btn-loader');
             
             btn.disabled = true;
-            btnText.textContent = "Processing...";
+            btnText.textContent = "Packing...";
             if (btnLoader) btnLoader.classList.remove('hidden');
 
-            let orderSummary = "--- ORDER SUMMARY ---\n\n";
+            let orderSummary = "--- TREVIA ORDER ---\n\n";
             cart.forEach((item, index) => {
                 orderSummary += `${index + 1}. ${item.name} (₹${item.price})\n   Note: ${item.message || "None"}\n`;
             });
@@ -408,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } catch (error) {
                 console.error(error);
-                alert("Connection error. Please try again.");
+                alert("The magic connection failed. Please try again! ✨");
                 btn.disabled = false;
                 btnText.textContent = "Confirm Order ✨";
                 if (btnLoader) btnLoader.classList.add('hidden');
