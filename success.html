@@ -1,204 +1,127 @@
 <!DOCTYPE html>
- <html lang="en">
- <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Order Confirmed - Uphar Jewels</title>
-     <link rel="stylesheet" href="style.css">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap" rel="stylesheet">
-     <style>
-         /* Your existing CSS here */
-         body {
-             display: flex;
-             flex-direction: column;
-             min-height: 100vh;
-         }
-         main {
-             flex-grow: 1;
-             display: flex;
-             align-items: center;
-             justify-content: center;
-         }
-         .success-container {
-             display: flex;
-             flex-direction: column;
-             align-items: center;
-             justify-content: center;
-             text-align: center;
-             padding: 2rem;
-             max-width: 700px;
-             width: 100%;
-         }
-         .success-container h1 {
-             font-size: 2.8rem;
-             color: var(--color-primary);
-             margin-bottom: 1rem;
-         }
-         .success-container p {
-             font-size: 1.1rem;
-             margin-bottom: 1.5rem;
-             max-width: 600px;
-         }
-         .payment-section {
-             margin-top: 1.5rem;
-             padding: 2rem;
-             background-color: var(--color-light);
-             border-radius: var(--border-radius);
-             box-shadow: var(--shadow-heavy);
-             border-top: 5px solid var(--color-accent);
-             width: 100%;
-             display: flex; /* Added flex container */
-             flex-direction: column; /* Stack items vertically */
-             align-items: center; /* Center items horizontally */
-         }
-         .payment-section h2 {
-             font-size: 2rem;
-             color: var(--color-secondary);
-             margin-top: 0;
-             margin-bottom: 0.5rem;
-         }
-         .payment-total {
-             font-size: 1.5rem;
-             font-weight: 700;
-             margin-bottom: 1rem;
-             color: var(--color-primary);
-         }
-         .payment-qr-code {
-             max-width: 250px;
-             width: 100%;
-             height: auto;
-             margin: 0.5rem auto 1rem; /* Adjusted margin */
-             border: 5px solid white;
-             box-shadow: var(--shadow-light);
-         }
-         .payment-instructions {
-             font-size: 1.1rem;
-             margin-bottom: 1rem; /* Adjusted margin */
-         }
-         .cta-button {
-             display: inline-block;
-             background-color: #4a4a4a; /* Using a default color */
-             color: white;
-             padding: 12px 25px;
-             border-radius: 50px;
-             text-decoration: none;
-             font-weight: 700;
-             transition: all 0.3s ease;
-             margin-bottom: 1rem; /* Adjusted margin */
-         }
-         .cta-button:hover {
-             background-color: #333; /* Using a default color */
-             transform: translateY(-3px);
-         }
-         .cta-button i {
-             margin-right: 8px;
-         }
-         .whatsapp-button {
-             display: inline-block;
-             background-color: #25D366;
-             color: white;
-             padding: 12px 25px;
-             border-radius: 50px;
-             text-decoration: none;
-             font-weight: 700;
-             transition: all 0.3s ease;
-             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-         }
-         .whatsapp-button:hover {
-             background-color: #1EBE57;
-             transform: translateY(-3px);
-         }
-         .whatsapp-button i {
-             margin-right: 8px;
-         }
-     </style>
- </head>
- <body>
- 
-     <header>
-         <nav>
-             <a href="/" class="logo">
-                 <img src="logo.svg" alt="Uphar Logo">
-             </a>
-         </nav>
-     </header>
- 
-     <main>
-         <div class="success-container">
-             <h1>Thank You For Your Order!</h1>
-             <p>Your shipping details have been received. Please complete the final step below to confirm your order.</p>
- 
-             <div class="payment-section">
-                 <h2>Complete Your Payment</h2>
-                 <h3 class="payment-total">Total Amount: ₹<span id="order-total">0.00</span></h3>
-                 <p class="payment-instructions">
-                     Scan the QR code or click the button below to pay.
-                 </p>
-                 <img id="qr-code-img" src="" alt="Payment QR Code" class="payment-qr-code">
-                 
-                 <a id="upi-payment-link" href="#" class="cta-button">
-                     <i class="fas fa-mobile-alt"></i> Pay with UPI App
-                 </a>
- 
-                 <p class="payment-instructions">
-                     After paying, please send a screenshot of the confirmation to our WhatsApp number to finalize your order.
-                 </p>
-                 <a href="#" class="whatsapp-button" target="_blank">
-                     <i class="fab fa-whatsapp"></i> Send Screenshot
-                 </a>
-             </div>
-         </div>
-     </main>
- 
-     <footer id="about">
-         </footer>
- 
-     <script>
-     document.addEventListener('DOMContentLoaded', () => {
-         // --- CONFIGURATION: CHANGE THESE VALUES ---
-         const yourUpiId = 'YOUR_UPI_ID@oksbi'; // ⚠️ IMPORTANT: Replace with your UPI ID
-         const yourName = 'Uphar Jewels'; // Replace with your name or business name
-         // ------------------------------------------
- 
-         const orderSummary = localStorage.getItem('UpharOrderSummary');
-         const orderTotal = localStorage.getItem('UpharOrderTotal');
-         
-         const totalDisplay = document.getElementById('order-total');
-         const qrCodeImg = document.getElementById('qr-code-img');
-         const upiPaymentLink = document.getElementById('upi-payment-link');
-         const whatsappButton = document.querySelector('.whatsapp-button');
- 
-         if (orderTotal && totalDisplay) {
-    totalDisplay.textContent = orderTotal;
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - Uphaar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --baby-pink: #FDE2E4;
+            --dark-pink: #F7A8B8;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFF9F9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .font-pacifico { font-family: 'Pacifico', cursive; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
 
-    const transactionNote = "Payment for Uphar Jewels Order";
-    // FIX: Added quotes around the payee name "Prakha Agarwal"
-    const upiUrl = `upi://pay?pa=${"prakharagarwal1434-1@oksbi"}&pn=${encodeURIComponent('Prakha Agarwal')}&am=${orderTotal}&tn=${encodeURIComponent(transactionNote)}&cu=INR`;
+        .btn-custom {
+            background: linear-gradient(45deg, var(--dark-pink), #ffadc1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-whatsapp { background-color: #25D366; color: white; transition: 0.3s; }
+        .btn-whatsapp:hover { background-color: #1EBE57; transform: translateY(-2px); }
 
-    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+        .floating-element {
+            position: absolute; pointer-events: none;
+            animation: floatUp 15s infinite linear; z-index: -1; opacity: 0.5;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh); opacity: 0.5; }
+            100% { transform: translateY(-20vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="p-6">
     
-    if (qrCodeImg) {
-        qrCodeImg.src = qrApiUrl;
-    }
-    if (upiPaymentLink) {
-        upiPaymentLink.href = upiUrl;
-    }
-}
- 
-         if (orderSummary && whatsappButton) {
-             const baseText = "Hello! Here is my payment screenshot for my Uphar Jewels order.\n\nMy Order Details:\n";
-             const fullMessage = baseText + orderSummary;
-             const encodedMessage = encodeURIComponent(fullMessage);
-             whatsappButton.href = `https://wa.me/916394102248?text=${encodedMessage}`;
-         }
- 
-         localStorage.removeItem('UpharOrderSummary');
-         localStorage.removeItem('UpharOrderTotal');
-     });
-     </script>
- 
- </body>
- </html>
+    <div id="floating-container" class="fixed inset-0 w-full h-full -z-10"></div>
+
+    <div class="glass-card w-full max-w-lg rounded-[2.5rem] p-8 text-center relative overflow-hidden">
+        
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md animate-bounce">
+            <i class="fa-solid fa-check text-4xl text-green-500"></i>
+        </div>
+        
+        <h1 class="font-pacifico text-4xl text-pink-500 mb-2">Thank You!</h1>
+        <p class="text-gray-500 mb-8">Your order details have been received.</p>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-pink-50 mb-6">
+            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Total Amount</h3>
+            <div class="text-4xl font-bold text-gray-800">₹<span id="order-total">0.00</span></div>
+        </div>
+
+        <div class="space-y-4">
+            <p class="text-sm font-bold text-gray-700">Scan to Pay via UPI</p>
+            <div class="bg-white p-2 inline-block rounded-xl border border-gray-100 shadow-inner">
+                <img id="qr-code-img" src="" alt="Loading QR..." class="w-48 h-48 object-contain">
+            </div>
+            
+            <a id="upi-payment-link" href="#" class="block w-full py-3 rounded-xl btn-custom font-bold shadow-lg">
+                <i class="fas fa-mobile-alt mr-2"></i> Tap to Pay via UPI App
+            </a>
+
+            <div class="text-xs text-gray-400 my-4">OR</div>
+
+            <a id="whatsapp-btn" href="#" target="_blank" class="block w-full py-3 rounded-xl btn-whatsapp font-bold shadow-lg">
+                <i class="fab fa-whatsapp mr-2"></i> Send Screenshot on WhatsApp
+            </a>
+        </div>
+        
+        <a href="index.html" class="inline-block mt-8 text-sm font-bold text-gray-400 hover:text-pink-500 transition">Back to Home</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Floating Elements
+            const container = document.getElementById('floating-container');
+            const emojis = ['✨', '🎉', '💖'];
+            for(let i=0; i<15; i++) {
+                const el = document.createElement('div');
+                el.className = 'floating-element';
+                el.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+                el.style.left = Math.random()*100 + '%';
+                el.style.animationDuration = (Math.random()*10 + 10) + 's';
+                el.style.fontSize = (Math.random()*20 + 20) + 'px';
+                container.appendChild(el);
+            }
+
+            // Payment Logic
+            const YOUR_UPI_ID = 'prakharagarwal1434-1@oksbi'; 
+            const PAYEE_NAME = 'Prakha Agarwal';
+            const WHATSAPP_NUMBER = '916394102248';
+
+            const orderSummary = localStorage.getItem('UpharOrderSummary');
+            const orderTotal = localStorage.getItem('UpharOrderTotal');
+            
+            if (orderTotal) {
+                document.getElementById('order-total').textContent = orderTotal;
+                const upiUrl = `upi://pay?pa=${YOUR_UPI_ID}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${orderTotal}&cu=INR`;
+                document.getElementById('upi-payment-link').href = upiUrl;
+                const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+                document.getElementById('qr-code-img').src = qrUrl;
+            }
+
+            if (orderSummary) {
+                const message = `Hello! Payment Screenshot for Uphaar Jewels Order.\n\n${orderSummary}`;
+                document.getElementById('whatsapp-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            }
+        });
+    </script>
+</body>
+</html>

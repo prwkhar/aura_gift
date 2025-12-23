@@ -1,148 +1,295 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uphar │ Jewels & Gifts</title>
-    <!-- Favicon -->
+    <title>Uphaar - Custom Enchanted Gifts</title>
     <link rel="icon" href="logo2.svg" type="image/svg+xml">
-    <!-- Font Awesome for icons -->
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;600;700&family=Tiro+Devanagari+Hindi:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Your Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --baby-pink: #FDE2E4;
+            --light-green: #E2F0D9;
+            --dark-pink: #F7A8B8;
+            --dark-green: #A9C4A2;
+            --text-dark: #333333;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFF9F9;
+            color: var(--text-dark);
+            cursor: none; /* Hide default cursor */
+            overflow-x: hidden;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        .font-pacifico { font-family: 'Pacifico', cursive; }
+        
+        /* --- CUSTOM CURSOR --- */
+        .custom-cursor-dot {
+            width: 8px; height: 8px;
+            background-color: var(--dark-pink);
+            border-radius: 50%; position: fixed;
+            transform: translate(-50%, -50%); pointer-events: none; z-index: 9999;
+        }
+        .custom-cursor-outline {
+            width: 30px; height: 30px;
+            border: 2px solid var(--dark-pink);
+            border-radius: 50%; position: fixed;
+            transform: translate(-50%, -50%); pointer-events: none; z-index: 9999;
+            transition: all 0.1s;
+        }
+        body:has(a:hover, button:hover, .clickable:hover) .custom-cursor-outline {
+            width: 50px; height: 50px;
+            background-color: rgba(247, 168, 184, 0.2); border-color: transparent;
+        }
+
+        /* --- ANIMATIONS --- */
+        .reveal {
+            opacity: 0; transform: translateY(30px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .floating-element {
+            position: absolute; pointer-events: none;
+            animation: floatUp 15s infinite linear; z-index: -1; opacity: 0.6;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 0.6; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+
+        /* --- COMPONENTS --- */
+        .btn-custom {
+            background: linear-gradient(45deg, var(--dark-pink), #ffadc1);
+            color: white; border: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(247, 168, 184, 0.4);
+        }
+        .btn-custom:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(247, 168, 184, 0.6);
+        }
+
+        /* --- MODALS (Glassmorphism) --- */
+        .modal {
+            display: none; position: fixed; z-index: 999;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(51, 51, 51, 0.3);
+            backdrop-filter: blur(5px);
+            justify-content: center; align-items: center; padding: 1rem;
+        }
+        .modal.active { display: flex !important; animation: fadeIn 0.3s ease-out; }
+        
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        /* --- 3D CANVAS --- */
+        #hero-3d-canvas { width: 100%; height: 400px; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
 </head>
+
 <body>
 
-    <header>
-        <nav>
-            <a href="#" class="logo">
-                <img src="logo.svg" alt="Uphar Logo">
-            </a>
-            <div id="cart-icon" class="cart-icon">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span id="cart-count">0</span>
+    <div class="custom-cursor-dot"></div>
+    <div class="custom-cursor-outline"></div>
+
+    <div id="floating-container" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></div>
+
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="font-pacifico text-4xl text-pink-500 hover:scale-105 transition-shadow">Uphaar</a>
+            
+            <div id="cart-icon" class="relative cursor-pointer group clickable flex items-center gap-2">
+                <div class="p-2 rounded-full hover:bg-pink-50 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-gray-600 group-hover:text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                </div>
+                <span id="cart-count" class="absolute top-0 right-0 bg-green-500 text-white font-bold text-xs h-5 w-5 flex items-center justify-center rounded-full border-2 border-white transform transition-transform group-hover:scale-110">0</span>
             </div>
         </nav>
     </header>
 
     <main>
-        <section class="hero">
-            <video playsinline autoplay muted loop id="hero-video">
-                <source src="https://res.cloudinary.com/dijtya7zg/video/upload/v1745954780/background_pb69nz.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <div class="hero-content">
-                <h1>Elegance in Every Piece</h1>
-                <p>Discover our exclusive collection of fine jewellery and unique gifts.</p>
-                <a href="#shop" class="cta-button">Shop Now</a>
+        <section class="container mx-auto px-6 py-12 md:py-20">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left reveal">
+                    <span class="inline-block py-1 px-4 rounded-full bg-pink-100 text-pink-500 text-sm font-bold tracking-widest uppercase mb-4">
+                        ✨ Customized Gifting
+                    </span>
+                    <h1 class="text-4xl md:text-6xl font-bold text-gray-800 leading-tight">
+                        Make It <span class="font-pacifico text-pink-500">Personal</span>,
+                    </h1>
+                    <h2 class="text-3xl md:text-5xl font-bold text-gray-700 mt-2">Make It Magic.</h2>
+                    <p class="mt-6 text-lg text-gray-500">
+                        Beautiful jewelry and keepsakes designed by us, customized by <b>you</b>. Add a name, a date, or a secret message.
+                    </p>
+                    <a href="#shop" class="mt-8 inline-block btn-custom font-bold py-3 px-8 rounded-full text-lg clickable">
+                        Start Creating
+                    </a>
+                </div>
+                
+                <!-- <div id="hero-3d-canvas-container" class="relative reveal h-[400px] w-full clickable">
+                    <div id="hero-3d-canvas"></div>
+                    <p class="absolute bottom-4 left-1/2 -translate-x-1/2 text-sm text-gray-400 opacity-70">Click the box to open!</p>
+                </div> -->
             </div>
         </section>
 
-        <section id="shop" class="product-section">
-            <h2>Our Collection</h2>
-            <div id="product-list" class="product-grid">
-                <!-- Products will be loaded here by JavaScript -->
+        <section id="shop" class="bg-light-green/30 py-20 rounded-t-[3rem]">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="text-4xl font-bold text-gray-800">Trending Treasures</h2>
+                    <p class="text-gray-500 mt-2 font-pacifico text-xl text-pink-400">Handpicked with love</p>
+                </div>
+
+                <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="col-span-full text-center py-10 text-pink-400 font-bold text-xl animate-pulse">
+                        Summoning beautiful things... ✨
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-6 py-20 max-w-3xl">
+            <h2 class="text-3xl font-bold text-center mb-10 reveal">You Asked, We Answered 💖</h2>
+            <div class="space-y-4 reveal">
+                <details class="bg-white p-5 rounded-2xl shadow-sm border border-pink-100 cursor-pointer group clickable">
+                    <summary class="flex justify-between items-center font-bold text-lg list-none text-gray-700">
+                        How do I add a custom message?
+                        <span class="text-pink-400 transition-transform group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="mt-4 text-gray-500 leading-relaxed">Simply click on a product, and you'll see a text box to write your note (e.g., "Engrave 'Love'"). You can even edit this later in your cart!</p>
+                </details>
+                <details class="bg-white p-5 rounded-2xl shadow-sm border border-pink-100 cursor-pointer group clickable">
+                    <summary class="flex justify-between items-center font-bold text-lg list-none text-gray-700">
+                        Is COD available?
+                        <span class="text-pink-400 transition-transform group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="mt-4 text-gray-500 leading-relaxed">Currently, we only accept prepaid orders (UPI) to ensure your custom gifts are processed immediately.</p>
+                </details>
             </div>
         </section>
     </main>
-    
-    <!-- Product Detail Modal -->
-    <div id="product-detail-modal" class="modal">
-        <div class="modal-content" id="product-detail-content">
-            <!-- Product details will be loaded here -->
-        </div>
-    </div>
 
-    <!-- Cart Modal -->
-    <div id="cart-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" id="close-cart">&times;</span>
-            <h2>Your Cart</h2>
-            <div id="cart-items"></div>
-            <div class="cart-summary">
-                <strong>Total: ₹<span id="cart-total">0.00</span></strong>
+    <footer class="bg-pink-500 text-white py-12">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="font-pacifico text-4xl text-baby-pink mb-6">Uphaar</h3>
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="#" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-baby-pink hover:text-pink-600 transition-all clickable"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-baby-pink hover:text-pink-600 transition-all clickable"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://wa.me/9335869133" class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-baby-pink hover:text-pink-600 transition-all clickable"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
-            <button id="checkout-btn" class="cta-button">Proceed to Checkout</button>
-        </div>
-    </div>
-
-    <!-- Checkout Modal -->
-    <div id="checkout-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" id="close-checkout">&times;</span>
-            <h2>Shipping Information</h2>
-            <form id="checkout-form" action="https://api.web3forms.com/submit" method="POST">
-                
-                <input type="hidden" name="access_key" value="0643cf2c-7349-4d3c-93b0-18ca317ab65b">
-                <input type="hidden" name="subject" value="New Order from Uphar!">
-                <input type="hidden" id="order-details" name="order_details" value="">
-                <input type="hidden" name="from_name" value="Uphar Order">
-                <input type="hidden" name="redirect" value="https://uphar.shop/success.html"> 
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">10-Digit Phone Number</label>
-                        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="address">Address (House No, Building, Street)</label>
-                    <textarea id="address" name="address" rows="2" required></textarea>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="pincode">Pincode</label>
-                        <input type="text" id="pincode" name="pincode" required pattern="[0-9]{6}" title="Please enter a valid 6-digit pincode">
-                    </div>
-                     <div class="form-group">
-                        <label for="landmark">Landmark</label>
-                        <input type="text" id="landmark" name="landmark">
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="city">City</label>
-                        <input type="text" id="city" name="city" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="state">State</label>
-                        <input type="text" id="state" name="state" required>
-                    </div>
-                </div>
-
-                <button type="submit" class="cta-button submit-order-btn">
-                    <span class="btn-text">Place Order</span>
-                    <span class="btn-loader" style="display: none;">Placing...</span>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <footer id="about">
-        <div class="footer-content">
-            <p class="copyright">&copy; 2025 Uphar Jewels & Gifts. All rights reserved.</p>
-            <div class="footer-contact">
-                <a href="tel:9335869133"><i class="fa-solid fa-phone"></i> 9335869133</a>
-                <a href="mailto:auragiftzz@gmail.com"><i class="fa-solid fa-envelope"></i> auragiftzz@gmail.com</a>
-            </div>
+            <p class="text-gray-200 text-sm">© 2025 Uphaar Jewels. Crafted with magic. ✨</p>
         </div>
     </footer>
 
+    <div id="product-detail-modal" class="modal">
+        <div class="glass-panel w-full max-w-lg relative flex flex-col max-h-[90vh] overflow-hidden">
+            <button class="absolute top-4 right-4 z-20 w-8 h-8 bg-white/80 rounded-full text-gray-500 hover:text-red-500 transition close-modal clickable">✕</button>
+            
+            <div id="modal-slider-container" class="relative h-72 bg-gray-100 shrink-0"></div>
+            
+            <div class="p-8 overflow-y-auto">
+                <div class="flex justify-between items-start mb-2">
+                    <h2 id="modal-title" class="text-2xl font-bold text-gray-800"></h2>
+                    <span id="modal-price" class="text-2xl font-bold text-pink-500 font-pacifico"></span>
+                </div>
+                <p id="modal-desc" class="text-gray-500 text-sm leading-relaxed mb-6"></p>
+                
+                <div class="bg-pink-50 p-4 rounded-xl border border-pink-100 mb-6">
+                    <label class="block text-xs font-bold text-pink-500 uppercase mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Personalize It
+                    </label>
+                    <textarea id="modal-custom-note" rows="2" placeholder="Ex: Engrave 'Ananya', Wrap in blue paper..." class="w-full p-2 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 bg-white text-sm"></textarea>
+                </div>
+                <button id="modal-add-btn" class="btn-custom w-full py-3 rounded-xl font-bold clickable">Add to Cart 🛍️</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal">
+        <div class="glass-panel w-full max-w-md relative flex flex-col max-h-[90vh] overflow-hidden">
+            <div class="p-6 border-b border-pink-100 flex justify-between items-center bg-white/50">
+                <h2 class="text-2xl font-bold text-gray-800 font-pacifico">Your Basket 🧺</h2>
+                <button class="close-modal text-2xl text-gray-400 hover:text-gray-800 clickable">×</button>
+            </div>
+            <div id="cart-items-container" class="p-6 overflow-y-auto flex-grow space-y-4 bg-white/30"></div>
+            <div class="p-6 bg-white/80 border-t border-pink-100">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-gray-500 font-bold">Total Amount</span>
+                    <span class="text-3xl font-bold text-pink-500">₹<span id="cart-total">0.00</span></span>
+                </div>
+                <button id="checkout-btn" class="btn-custom w-full py-3 rounded-xl font-bold clickable">Checkout Now</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="modal">
+        <div class="glass-panel w-full max-w-2xl relative flex flex-col max-h-[95vh] overflow-hidden">
+            <div class="p-6 border-b border-pink-100 flex justify-between items-center bg-white/50">
+                <h2 class="text-2xl font-bold text-gray-800 font-pacifico">Shipping Details 🚚</h2>
+                <button class="close-modal text-2xl text-gray-400 hover:text-gray-800 clickable">×</button>
+            </div>
+            <div class="p-8 overflow-y-auto bg-white/60">
+                <form id="checkout-form" class="space-y-5">
+                    <input type="hidden" name="access_key" value="0643cf2c-7349-4d3c-93b0-18ca317ab65b">
+                    <input type="hidden" name="subject" value="New Custom Order (Uphaar)">
+                    <input type="hidden" id="hidden-order-details" name="order_details" value="">
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Name</label>
+                            <input type="text" name="name" required placeholder="Your full name" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-pink-300 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Phone</label>
+                            <input type="tel" name="phone" required pattern="[0-9]{10}" placeholder="10 digit number" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-pink-300 outline-none">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Address</label>
+                        <textarea name="address" rows="2" required placeholder="Full delivery address" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-pink-300 outline-none"></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">Pincode</label>
+                            <input type="text" name="pincode" required pattern="[0-9]{6}" class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-pink-300 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-500 uppercase mb-1 ml-1">City</label>
+                            <input type="text" name="city" required class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-pink-300 outline-none">
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn btn-custom w-full mt-4 flex justify-center items-center gap-2 text-lg clickable">
+                        <span class="btn-text">Confirm Order ✨</span>
+                        <span class="btn-loader hidden"><i class="fa-solid fa-spinner fa-spin"></i></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
-    <script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

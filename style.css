@@ -32,7 +32,6 @@ h1, h2, h3 {
     font-weight: 700;
 }
 
-/* --- HEADER & NAVIGATION --- */
 header {
     background: var(--color-light);
     padding: 0.5rem 5%; /* Adjusted padding for image logo */
@@ -75,9 +74,8 @@ nav {
     border: 2px solid var(--color-light);
 }
 
-/* --- HERO SECTION --- */
 .hero {
-    height: 90vh;
+    height: 20vh;
     position: relative;
     display: flex;
     align-items: center;
