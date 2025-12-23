@@ -10,31 +10,34 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Pacifico&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- TREVIA THEME --- */
+        /* --- TREVIA THEME (Updated for Better Contrast) --- */
         :root {
-            --primary: #FF8FAB;
-            --secondary: #FB6F92;
+            /* Slightly deeper pinks for better visibility */
+            --primary: #FF5D8F; 
+            --secondary: #FB4B7A; 
             --accent: #FFE5EC;
-            --shadow-soft: 0 10px 40px -10px rgba(255, 143, 171, 0.3);
+            --text-main: #333333;
+            --text-soft: #5A5A5A;
+            --shadow-soft: 0 10px 40px -10px rgba(251, 75, 122, 0.25);
+            --card-border: 2px solid rgba(255, 255, 255, 0.9);
         }
 
         body {
             font-family: 'Quicksand', sans-serif;
-            background: linear-gradient(-45deg, #fff0f3, #e8f5e9, #f3e5f5, #fff5e6);
+            /* Slightly more saturated gradient so it doesn't look washed out */
+            background: linear-gradient(-45deg, #fff0f5, #f0fdf4, #f3e8ff, #fff8e1);
             background-size: 400% 400%;
             animation: gradientBG 20s ease infinite;
-            color: #4A4A4A;
+            color: var(--text-main);
             cursor: auto; 
             overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
         }
 
-        @media (min-width: 768px) {
-            body { cursor: none; }
-        }
+        @media (min-width: 768px) { body { cursor: none; } }
 
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
@@ -43,149 +46,94 @@
         }
 
         .font-pacifico { font-family: 'Pacifico', cursive; }
-        .font-chunky { font-family: 'Fredoka', sans-serif; }
+        .font-chunky { font-family: 'Fredoka', sans-serif; letter-spacing: 0.5px; }
 
         /* --- MARQUEE BANNER --- */
         .marquee-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: #FB6F92; /* Secondary Pink */
-            color: white;
-            padding: 8px 0;
-            z-index: 100;
-            overflow: hidden;
-            white-space: nowrap;
-            box-shadow: 0 2px 10px rgba(251, 111, 146, 0.3);
-            font-family: 'Fredoka', sans-serif;
-            font-weight: 600;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: var(--secondary); color: white; padding: 8px 0;
+            z-index: 100; overflow: hidden; white-space: nowrap;
+            box-shadow: 0 2px 10px rgba(251, 75, 122, 0.3);
+            font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 0.85rem;
+            letter-spacing: 1px; text-transform: uppercase;
         }
-
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 25s linear infinite;
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* --- CUSTOM CURSOR (Desktop Only) --- */
-        @media (min-width: 768px) {
-            .custom-cursor-dot {
-                width: 12px; height: 12px;
-                background-color: var(--secondary);
-                border-radius: 50%; position: fixed;
-                transform: translate(-50%, -50%); pointer-events: none; z-index: 9999;
-                box-shadow: 0 0 10px var(--secondary);
-            }
-            .custom-cursor-outline {
-                width: 40px; height: 40px;
-                border: 2px solid var(--secondary);
-                border-radius: 50%; position: fixed;
-                transform: translate(-50%, -50%); pointer-events: none; z-index: 9999;
-                transition: width 0.2s, height 0.2s, background-color 0.2s;
-                mix-blend-mode: multiply;
-            }
-            body:has(.clickable:hover) .custom-cursor-outline {
-                width: 60px; height: 60px;
-                background-color: rgba(251, 111, 146, 0.1);
-                border-color: transparent;
-                transform: translate(-50%, -50%) scale(1.1);
-            }
-        }
+        .marquee-content { display: inline-block; animation: marquee 30s linear infinite; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- UI COMPONENTS --- */
         .floating-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border: 2px solid white;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px);
+            border: var(--card-border); box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
-
+        
+        /* Darker borders for glass cards to make them pop */
         .glass-card {
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 1); 
             box-shadow: var(--shadow-soft);
-            border-radius: 1.5rem;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 1.5rem; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(255, 143, 171, 0.4);
-            background: rgba(255, 255, 255, 0.8);
+        .glass-card:hover { 
+            transform: translateY(-5px); 
+            background: rgba(255, 255, 255, 0.95); 
+            border-color: #FFDEE9;
         }
 
         /* Jelly Button */
         .btn-jelly {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            border-radius: 999px;
-            box-shadow: 0 4px 15px rgba(251, 111, 146, 0.4);
-            transition: all 0.2s;
-            position: relative;
-            overflow: hidden;
+            background: linear-gradient(135deg, var(--secondary), var(--primary)); 
+            color: white; border: none; border-radius: 999px;
+            box-shadow: 0 4px 15px rgba(251, 75, 122, 0.4); 
+            transition: all 0.2s; position: relative; overflow: hidden;
         }
         .btn-jelly:active { transform: scale(0.95); }
-        .btn-jelly:hover { background: #ff5c86; box-shadow: 0 6px 20px rgba(251, 111, 146, 0.6); }
-
-        /* --- ANIMATIONS --- */
-        .reveal {
-            opacity: 0; transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        .btn-jelly:hover { 
+            background: linear-gradient(135deg, #ff3f70, #ff7096); 
+            box-shadow: 0 6px 20px rgba(251, 75, 122, 0.6); 
         }
+
+        /* --- SLIDER & LIGHTBOX --- */
+        .slider-snap {
+            overflow-x: auto; scroll-snap-type: x mandatory; display: flex;
+            -webkit-overflow-scrolling: touch; scroll-behavior: smooth;
+            width: 100%; height: 100%;
+        }
+        .slider-snap::-webkit-scrollbar { display: none; }
+        .slider-snap { -ms-overflow-style: none; scrollbar-width: none; }
+        .slide { flex: 0 0 100%; scroll-snap-align: center; position: relative; }
+        
+        .lightbox-overlay {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(0,0,0,0.95); backdrop-filter: blur(5px);
+            display: none; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .lightbox-overlay.active { display: flex; opacity: 1; }
+        .lightbox-img { max-height: 90vh; max-width: 90vw; border-radius: 8px; box-shadow: 0 0 30px rgba(255,255,255,0.1); transform: scale(0.9); transition: transform 0.3s; }
+        .lightbox-overlay.active .lightbox-img { transform: scale(1); }
+
+        /* --- ANIMATIONS & CURSOR --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s, transform 0.8s; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
-
-        .floating-element {
-            position: absolute; pointer-events: none;
-            animation: floatUp 20s infinite linear; z-index: -1; 
-            filter: blur(1px);
+        
+        @media (min-width: 768px) {
+            .custom-cursor-dot { width: 12px; height: 12px; background: var(--secondary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; }
+            .custom-cursor-outline { width: 40px; height: 40px; border: 2px solid var(--secondary); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transition: width 0.2s, height 0.2s, background 0.2s; mix-blend-mode: multiply; transform: translate(-50%, -50%); }
+            body:has(.clickable:hover) .custom-cursor-outline { width: 60px; height: 60px; background: rgba(251, 111, 146, 0.1); border-color: transparent; transform: translate(-50%, -50%) scale(1.1); }
         }
-
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
-            100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* Hero Image Animations */
-        .animate-float-slow { animation: floatY 6s ease-in-out infinite; }
-        .animate-float-medium { animation: floatY 5s ease-in-out infinite reverse; }
-        .animate-spin-slow { animation: spin 20s linear infinite; }
-
-        @keyframes floatY {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .floating-element { position: absolute; pointer-events: none; animation: floatUp 20s infinite linear; z-index: -1; filter: blur(1px); }
+        @keyframes floatUp { 0% { transform: translateY(110vh) rotate(0deg); opacity: 0; } 100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; } }
 
         /* --- MODALS --- */
-        .modal {
-            display: none; position: fixed; z-index: 1000;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(255, 229, 236, 0.7);
-            backdrop-filter: blur(5px);
-            align-items: center; justify-content: center;
-            padding: 1rem;
-        }
-        .modal.active { display: flex !important; animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .modal { display: none; position: fixed; z-index: 1000; inset: 0; background: rgba(50, 20, 30, 0.4); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 1rem; }
+        .modal.active { display: flex !important; animation: popIn 0.3s; }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
         
-        @keyframes popIn {
-            0% { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        textarea, input {
-            -webkit-appearance: none;
-        }
+        textarea, input { -webkit-appearance: none; }
+        .animate-float-slow { animation: floatY 6s ease-in-out infinite; }
+        .animate-float-medium { animation: floatY 5s ease-in-out infinite reverse; }
+        @keyframes floatY { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
     </style>
 </head>
 
@@ -199,186 +147,173 @@
 
     <div class="custom-cursor-dot hidden md:block"></div>
     <div class="custom-cursor-outline hidden md:block"></div>
-
     <div id="floating-container" class="fixed top-0 left-0 w-full h-full -z-10 overflow-hidden pointer-events-none"></div>
 
-    <header class="fixed w-full top-10 md:top-12 z-50 px-4">
+    <header class="fixed w-full top-12 z-50 px-4">
         <nav class="container mx-auto max-w-4xl floating-nav rounded-full px-4 md:px-8 py-2 md:py-3 flex justify-between items-center">
             <a href="#" class="flex items-center gap-2 clickable">
                 <span class="text-2xl pt-1">🎀</span>
                 <span class="font-pacifico text-2xl md:text-3xl text-pink-500 tracking-wide drop-shadow-sm">Trevia</span>
             </a>
-            
             <div id="cart-icon" class="relative cursor-pointer group clickable flex items-center gap-2 md:gap-3 bg-pink-50 px-3 md:px-4 py-2 rounded-full border border-pink-100 transition-colors hover:bg-white active:scale-95">
-                <span class="text-xs md:text-sm font-bold text-gray-500 group-hover:text-pink-500 hidden sm:inline">Cart</span>
+                <span class="text-xs md:text-sm font-bold text-gray-700 group-hover:text-pink-500 hidden sm:inline">Cart</span>
                 <div class="relative">
-                    <i class="fa-solid fa-basket-shopping text-lg md:text-xl text-pink-400 group-hover:text-pink-600 transition-colors"></i>
+                    <i class="fa-solid fa-basket-shopping text-lg md:text-xl text-pink-500 group-hover:text-pink-600 transition-colors"></i>
                     <span id="cart-count" class="absolute -top-2 -right-2 bg-gradient-to-r from-pink-500 to-red-400 text-white font-bold text-[10px] h-5 w-5 flex items-center justify-center rounded-full shadow-md">0</span>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main class="pt-32 md:pt-44 pb-20 overflow-x-hidden">
+    <main class="pt-36 md:pt-48 pb-20 overflow-x-hidden">
         
-        <section class="container mx-auto px-4 md:px-6 mb-16 md:mb-24">
-            <div class="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-12">
+        <section class="container mx-auto px-4 md:px-6 mb-12">
+            <div class="glass-card p-6 md:p-12 text-center relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-300 via-purple-300 to-pink-300"></div>
                 
-                <div class="w-full md:w-1/2 text-center md:text-left reveal relative z-10">
-                    <div class="relative inline-block">
-                        <span class="inline-block py-1 px-4 rounded-full bg-white border border-pink-200 text-pink-500 text-[10px] md:text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
-                            ✨ New Collection 2025
-                        </span>
-                        <i class="fa-solid fa-star text-yellow-300 absolute -top-2 -right-4 text-xl animate-bounce"></i>
-                    </div>
-                    
-                    <h1 class="text-4xl sm:text-5xl md:text-7xl font-chunky text-gray-800 leading-[1.1] mb-4 md:mb-6">
-                        Gifts that make<br>
-                        hearts <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 font-pacifico">Flutter</span>
-                    </h1>
-                    
-                    <p class="text-base md:text-lg text-gray-600 font-medium mb-6 md:mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
-                        At <span class="font-bold text-pink-500">Trevia</span>, we don't just sell things. We craft memories. Personalize jewelry and keepsakes with your secret whispers.
-                    </p>
-                    
-                    <div class="flex flex-col sm:flex-row gap-3 justify-center md:justify-start w-full sm:w-auto">
-                        <a href="#shop" class="btn-jelly px-8 py-3.5 text-base md:text-lg font-bold clickable w-full sm:w-auto text-center">
-                            Start Gifting <i class="fa-solid fa-heart ml-2"></i>
-                        </a>
-                        <a href="#shop" class="bg-white text-gray-600 px-8 py-3.5 rounded-full text-base md:text-lg font-bold shadow-sm hover:bg-gray-50 transition-colors clickable border border-gray-200 w-full sm:w-auto text-center">
-                            View Gallery
-                        </a>
-                    </div>
+                <h1 class="text-3xl sm:text-4xl md:text-6xl font-chunky text-gray-800 leading-tight mb-4">
+                    Gifts that make hearts <span class="text-pink-500 font-pacifico">Flutter</span>
+                </h1>
+                <p class="text-gray-600 font-medium text-sm md:text-lg mb-6 max-w-xl mx-auto">
+                    Handmade treasures, customized by you. Add a name, a date, or a secret whisper.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#product-list" class="btn-jelly px-8 py-3.5 text-lg font-bold clickable w-full sm:w-auto shadow-xl">
+                        Shop Collection 🛍️
+                    </a>
                 </div>
                 
-                <div class="w-full md:w-1/2 reveal px-4">
-                    <div class="relative w-full max-w-sm mx-auto md:max-w-md aspect-square md:aspect-auto md:h-[450px]">
-                        
-                        <div class="absolute inset-0 md:inset-x-6 md:inset-y-0 bg-white/40 backdrop-blur-xl rounded-[2.5rem] border-4 border-white shadow-2xl animate-float-slow flex items-center justify-center overflow-hidden z-10">
-                            <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover opacity-90 hover:scale-110 transition duration-700">
-                            
-                            <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/50 to-transparent p-6 text-white">
-                                <p class="font-pacifico text-xl">Custom Made</p>
-                                <p class="text-xs opacity-90">With love, for you.</p>
-                            </div>
-                        </div>
-
-                        <div class="absolute -top-4 -right-2 md:-right-6 bg-white p-3 md:p-4 rounded-2xl shadow-lg animate-float-medium z-20 border border-pink-100 flex items-center gap-2">
-                            <span class="bg-pink-100 p-1.5 rounded-full text-pink-500"><i class="fa-solid fa-gift"></i></span>
-                            <div>
-                                <p class="text-[10px] text-gray-400 font-bold uppercase">Wrapped</p>
-                                <p class="text-xs font-bold text-gray-700">With Care</p>
-                            </div>
-                        </div>
-
-                        <div class="absolute -bottom-6 -left-2 md:-left-4 bg-white/90 backdrop-blur p-4 rounded-full shadow-xl animate-float-slow z-20 border border-purple-100" style="animation-delay: 1s;">
-                            <div class="flex -space-x-3">
-                                <div class="w-8 h-8 rounded-full bg-pink-300 border-2 border-white"></div>
-                                <div class="w-8 h-8 rounded-full bg-purple-300 border-2 border-white"></div>
-                                <div class="w-8 h-8 rounded-full bg-blue-300 border-2 border-white flex items-center justify-center text-[10px] font-bold text-white">+99</div>
-                            </div>
-                        </div>
-
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-br from-pink-200/40 to-purple-200/40 rounded-full blur-3xl -z-10 animate-pulse"></div>
+                <div class="grid grid-cols-3 gap-2 md:gap-8 mt-10 border-t border-pink-100 pt-8">
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-wand-magic-sparkles text-2xl text-pink-400 mb-2"></i>
+                        <span class="text-xs md:text-sm font-bold text-gray-700">Custom Made</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-truck-fast text-2xl text-purple-400 mb-2"></i>
+                        <span class="text-xs md:text-sm font-bold text-gray-700">Fast Shipping</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-shield-heart text-2xl text-red-400 mb-2"></i>
+                        <span class="text-xs md:text-sm font-bold text-gray-700">Secure Payment</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="shop" class="container mx-auto px-4 md:px-6 mb-24">
-            <div class="text-center mb-10 md:mb-16 reveal">
-                <span class="text-pink-500 font-bold tracking-widest text-xs uppercase">Shop The Magic</span>
-                <h2 class="text-3xl md:text-5xl font-chunky text-gray-800 mt-2 mb-3">Trending at Trevia</h2>
-                <div class="h-1.5 w-16 md:w-24 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full mx-auto"></div>
-            </div>
+        <section id="shop" class="container mx-auto px-4 md:px-6 mb-20">
+            <div class="flex items-center justify-between mb-8 px-2 reveal">
+                <div>
+                    <span class="text-pink-500 font-bold tracking-widest text-xs uppercase">New Arrivals</span>
+                    <h2 class="text-2xl md:text-4xl font-chunky text-gray-800">Trending Now</h2>
+                </div>
+                </div>
 
-            <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+            <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 min-h-[300px]">
                 <div class="col-span-full py-20 text-center">
-                    <i class="fa-solid fa-spinner fa-spin text-3xl text-pink-300 mb-4 block"></i>
-                    <span class="text-gray-400 font-bold">Loading treasures...</span>
+                    <i class="fa-solid fa-spinner fa-spin text-3xl text-pink-500 mb-4 block"></i>
+                    <span class="text-gray-500 font-bold">Summoning treasures...</span>
                 </div>
             </div>
         </section>
 
-        <section class="container mx-auto px-4 md:px-6 max-w-4xl reveal">
-            <div class="glass-card p-6 md:p-12">
-                <div class="flex flex-col md:flex-row gap-8 items-center">
-                    <div class="md:w-1/3 text-center md:text-left">
-                        <span class="text-4xl md:text-6xl">🤔</span>
-                        <h2 class="text-2xl md:text-3xl font-chunky text-gray-800 mt-4 mb-2">Curious Minds?</h2>
-                        <p class="text-sm text-gray-500">Everything you need to know about your Trevia order.</p>
-                    </div>
-                    <div class="md:w-2/3 space-y-4 w-full">
-                        <details class="bg-white/60 p-4 rounded-2xl cursor-pointer group clickable transition-all hover:bg-white border border-white">
-                            <summary class="flex justify-between items-center font-bold text-sm md:text-base list-none text-gray-700">
-                                How do I add a name?
-                                <span class="w-6 h-6 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 text-xs transition-transform group-open:rotate-180">▼</span>
-                            </summary>
-                            <p class="mt-3 text-sm text-gray-500 leading-relaxed">
-                                Simply add an item to your cart! A text box will appear for every item where you can type names, dates, or special notes.
-                            </p>
-                        </details>
-                        
-                        <details class="bg-white/60 p-4 rounded-2xl cursor-pointer group clickable transition-all hover:bg-white border border-white">
-                            <summary class="flex justify-between items-center font-bold text-sm md:text-base list-none text-gray-700">
-                                Payment Methods?
-                                <span class="w-6 h-6 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 text-xs transition-transform group-open:rotate-180">▼</span>
-                            </summary>
-                            <p class="mt-3 text-sm text-gray-500 leading-relaxed">
-                                We accept all major UPI apps and Cards (Prepaid only) to customize your order immediately.
-                            </p>
-                        </details>
+        <section class="container mx-auto px-4 md:px-6 mb-20 reveal">
+            <div class="flex flex-col md:flex-row items-center gap-8 bg-white/60 rounded-[2rem] p-6 border border-white shadow-lg">
+                <div class="w-full md:w-1/2">
+                    <div class="relative rounded-2xl overflow-hidden aspect-video md:aspect-auto md:h-80 shadow-md">
+                        <img src="https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover hover:scale-105 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <p class="font-pacifico text-2xl">Made with Love</p>
+                        </div>
                     </div>
                 </div>
+                <div class="w-full md:w-1/2 md:pl-6">
+                    <h2 class="text-3xl font-chunky text-gray-800 mb-4">Why Trevia?</h2>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        We believe a gift shouldn't just be an object; it should be a feeling. That's why every piece at Trevia is 
+                        <span class="font-bold text-pink-500">hand-wrapped</span> and customizable. 
+                    </p>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center gap-3 text-gray-700 font-medium"><i class="fa-solid fa-check-circle text-green-500"></i> Premium Anti-Tarnish Quality</li>
+                        <li class="flex items-center gap-3 text-gray-700 font-medium"><i class="fa-solid fa-check-circle text-green-500"></i> Free Gift Box Packaging</li>
+                        <li class="flex items-center gap-3 text-gray-700 font-medium"><i class="fa-solid fa-check-circle text-green-500"></i> 100% Happiness Guarantee</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-4 md:px-6 max-w-3xl reveal">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-chunky text-gray-800">Curious Minds? 🤔</h2>
+            </div>
+            <div class="space-y-4">
+                <details class="bg-white/80 p-5 rounded-2xl cursor-pointer group clickable transition-all hover:bg-white border border-white shadow-sm">
+                    <summary class="flex justify-between items-center font-bold text-gray-800 list-none">
+                        How long does delivery take?
+                        <span class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 text-sm transition-transform group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="mt-3 text-sm text-gray-600 leading-relaxed font-medium">
+                        Custom magic takes time! ⏳ Making your item takes <strong>3-5 days</strong>, plus <strong>3-5 days</strong> for shipping.
+                    </p>
+                </details>
+                
+                <details class="bg-white/80 p-5 rounded-2xl cursor-pointer group clickable transition-all hover:bg-white border border-white shadow-sm">
+                    <summary class="flex justify-between items-center font-bold text-gray-800 list-none">
+                        What if I make a spelling mistake?
+                        <span class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 text-sm transition-transform group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="mt-3 text-sm text-gray-600 leading-relaxed font-medium">
+                        Don't panic! WhatsApp us within 2 hours of placing the order, and we'll fix the personalization for you. ✨
+                    </p>
+                </details>
+
+                <details class="bg-white/80 p-5 rounded-2xl cursor-pointer group clickable transition-all hover:bg-white border border-white shadow-sm">
+                    <summary class="flex justify-between items-center font-bold text-gray-800 list-none">
+                        Is COD available?
+                        <span class="w-8 h-8 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 text-sm transition-transform group-open:rotate-180">▼</span>
+                    </summary>
+                    <p class="mt-3 text-sm text-gray-600 leading-relaxed font-medium">
+                         Since these are custom-made just for you, we only accept Prepaid orders (UPI/Card). This ensures your gift is processed immediately!
+                    </p>
+                </details>
             </div>
         </section>
 
     </main>
 
-    <footer class="bg-white/50 backdrop-blur-lg pt-12 pb-8 border-t border-white">
+    <footer class="bg-white/80 backdrop-blur-lg pt-12 pb-8 border-t border-white mt-12">
         <div class="container mx-auto px-6 text-center">
-            <a href="#" class="font-pacifico text-4xl text-pink-400 block mb-4 hover:scale-105 transition-transform inline-block">Trevia</a>
-            <p class="text-gray-500 mb-8 max-w-xs mx-auto text-sm">Crafting smiles, one box at a time.</p>
-            
+            <a href="#" class="font-pacifico text-4xl text-pink-500 block mb-4 hover:scale-105 transition-transform inline-block">Trevia</a>
+            <p class="text-gray-500 mb-8 max-w-xs mx-auto text-sm font-medium">Crafting smiles, one box at a time.</p>
             <div class="flex justify-center gap-4 mb-8">
-                <a href="https://instagram.com" class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-pink-400 hover:bg-pink-500 hover:text-white transition-all clickable"><i class="fa-brands fa-instagram"></i></a>
-                <!-- <a href="#" class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-pink-400 hover:bg-pink-500 hover:text-white transition-all clickable"><i class="fa-brands fa-facebook-f"></i></a> -->
-                <a href="https://wa.me/9335869133" class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-green-500 hover:bg-green-500 hover:text-white transition-all clickable"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-pink-500 hover:bg-pink-500 hover:text-white transition-all clickable"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://wa.me/9335869133" class="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center text-green-500 hover:bg-green-500 hover:text-white transition-all clickable"><i class="fa-brands fa-whatsapp"></i></a>
             </div>
-            
-            <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-                © 2025 Trevia Gifts
-            </div>
+            <div class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">© 2025 Trevia Gifts</div>
         </div>
     </footer>
 
     <div id="product-detail-modal" class="modal p-4">
-        <div class="bg-white rounded-[2rem] w-full max-w-4xl relative flex flex-col md:flex-row max-h-[85vh] overflow-hidden shadow-2xl border-4 border-white m-2">
-            <button class="absolute top-3 right-3 z-20 w-8 h-8 bg-white rounded-full text-gray-400 hover:text-red-500 transition shadow-md flex items-center justify-center close-modal clickable font-bold">✕</button>
+        <div class="bg-white rounded-[2rem] w-full max-w-4xl relative flex flex-col md:flex-row max-h-[90vh] overflow-hidden shadow-2xl border-4 border-white m-2">
+            <button class="absolute top-3 right-3 z-20 w-8 h-8 bg-white/90 backdrop-blur rounded-full text-gray-600 hover:text-red-500 transition shadow-md flex items-center justify-center close-modal clickable font-bold">✕</button>
             
-            <div class="md:w-1/2 bg-gray-100 relative h-48 md:h-auto shrink-0">
-                <div id="modal-slider-container" class="w-full h-full"></div>
+            <div class="md:w-1/2 bg-gray-50 relative h-64 md:h-auto shrink-0 group border-b md:border-b-0 md:border-r border-gray-100">
+                <div id="modal-slider-container" class="w-full h-full relative"></div>
             </div>
             
             <div class="md:w-1/2 p-6 md:p-8 overflow-y-auto bg-white">
                 <div class="mb-4">
-                    <span class="text-pink-500 text-[10px] font-bold uppercase tracking-wider">Trevia Exclusive</span>
-                    <h2 id="modal-title" class="text-2xl md:text-3xl font-chunky text-gray-800 leading-tight mb-1"></h2>
-                    <span id="modal-price" class="text-2xl font-pacifico text-pink-500 block"></span>
+                    <span class="bg-pink-100 text-pink-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Trevia Exclusive</span>
+                    <h2 id="modal-title" class="text-2xl md:text-3xl font-chunky text-gray-800 leading-tight mb-1 mt-2"></h2>
+                    <span id="modal-price" class="text-3xl font-pacifico text-pink-500 block"></span>
                 </div>
-                
-                <p id="modal-desc" class="text-gray-500 text-sm leading-relaxed mb-6"></p>
-                
-                <div class="bg-pink-50 p-4 rounded-xl border border-pink-100 mb-6">
-                    <label class="block text-xs font-bold text-gray-500 uppercase mb-2">
-                        <i class="fa-solid fa-pen-nib text-pink-400"></i> Personalize
-                    </label>
-                    <textarea id="modal-custom-note" rows="2" placeholder="Example: Engrave 'Aarav'..." class="w-full p-3 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-200 bg-white text-sm resize-none"></textarea>
+                <p id="modal-desc" class="text-gray-600 text-sm leading-relaxed mb-6 font-medium"></p>
+                <div class="bg-pink-50/50 p-4 rounded-xl border border-pink-100 mb-6 shadow-inner">
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-2"><i class="fa-solid fa-pen-fancy text-pink-500"></i> Personalize Your Gift</label>
+                    <textarea id="modal-custom-note" rows="2" placeholder="Example: Engrave 'Aarav'..." class="w-full p-3 rounded-lg border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300 bg-white text-sm text-gray-800 resize-none placeholder-gray-400"></textarea>
                 </div>
-                
-                <button id="modal-add-btn" class="btn-jelly w-full py-3 rounded-xl font-bold text-base clickable shadow-lg flex justify-center items-center gap-2">
-                    Add to Cart 🛍️
-                </button>
+                <button id="modal-add-btn" class="btn-jelly w-full py-3.5 rounded-xl font-bold text-base clickable shadow-lg flex justify-center items-center gap-2">Add to Cart 🛍️</button>
             </div>
         </div>
     </div>
@@ -387,19 +322,12 @@
         <div class="bg-white rounded-[2rem] w-full max-w-md relative flex flex-col max-h-[85vh] shadow-2xl border-4 border-white m-2">
             <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-pink-50/30">
                 <h2 class="text-xl font-chunky text-gray-800">Your Basket</h2>
-                <button class="close-modal w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-400 hover:text-red-500 transition shadow-sm clickable">✕</button>
+                <button class="close-modal w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-500 hover:text-red-500 transition shadow-sm clickable">✕</button>
             </div>
-            
             <div id="cart-items-container" class="p-4 md:p-6 overflow-y-auto flex-grow space-y-4 bg-gray-50/30"></div>
-            
-            <div class="p-5 bg-white border-t border-gray-100 z-10">
-                <div class="flex justify-between items-end mb-4">
-                    <span class="text-gray-400 font-bold text-xs uppercase">Subtotal</span>
-                    <span class="text-3xl font-chunky text-gray-800">₹<span id="cart-total">0.00</span></span>
-                </div>
-                <button id="checkout-btn" class="btn-jelly w-full py-3.5 rounded-xl font-bold text-base clickable">
-                    Checkout <i class="fa-solid fa-arrow-right ml-1"></i>
-                </button>
+            <div class="p-5 bg-white border-t border-gray-100 z-10 shadow-[0_-10px_20px_rgba(0,0,0,0.02)]">
+                <div class="flex justify-between items-end mb-4"><span class="text-gray-500 font-bold text-xs uppercase">Subtotal</span><span class="text-3xl font-chunky text-gray-800">₹<span id="cart-total">0.00</span></span></div>
+                <button id="checkout-btn" class="btn-jelly w-full py-3.5 rounded-xl font-bold text-base clickable">Checkout <i class="fa-solid fa-arrow-right ml-1"></i></button>
             </div>
         </div>
     </div>
@@ -408,48 +336,32 @@
         <div class="bg-white rounded-[2rem] w-full max-w-xl relative flex flex-col max-h-[90vh] shadow-2xl border-4 border-white m-2">
             <div class="p-5 border-b border-gray-100 flex justify-between items-center bg-pink-50/30">
                 <h2 class="text-xl font-chunky text-gray-800">Shipping Info</h2>
-                <button class="close-modal w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-400 hover:text-red-500 transition shadow-sm clickable">✕</button>
+                <button class="close-modal w-8 h-8 rounded-full bg-white flex items-center justify-center text-gray-500 hover:text-red-500 transition shadow-sm clickable">✕</button>
             </div>
-            
             <div class="p-6 overflow-y-auto bg-gray-50/30">
                 <form id="checkout-form" class="space-y-4">
                     <input type="hidden" name="access_key" value="0643cf2c-7349-4d3c-93b0-18ca317ab65b">
                     <input type="hidden" name="subject" value="New Custom Order (Trevia)">
                     <input type="hidden" id="hidden-order-details" name="order_details" value="">
-                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Name</label>
-                            <input type="text" name="name" required class="w-full p-3 rounded-xl border-2 border-transparent bg-white shadow-sm focus:border-pink-300 outline-none text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Phone</label>
-                            <input type="tel" name="phone" required pattern="[0-9]{10}" class="w-full p-3 rounded-xl border-2 border-transparent bg-white shadow-sm focus:border-pink-300 outline-none text-sm">
-                        </div>
+                        <div><label class="block text-[10px] font-bold text-gray-500 uppercase mb-1 ml-1">Name</label><input type="text" name="name" required class="w-full p-3 rounded-xl border-2 border-transparent bg-white shadow-sm focus:border-pink-300 outline-none text-sm text-gray-800 font-bold"></div>
+                        <div><label class="block text-[10px] font-bold text-gray-500 uppercase mb-1 ml-1">Phone</label><input type="tel" name="phone" required pattern="[0-9]{10}" class="w-full p-3 rounded-xl border-2 border-transparent bg-white shadow-sm focus:border-pink-300 outline-none text-sm text-gray-800 font-bold"></div>
                     </div>
-                    
-                    <div>
-                        <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Address</label>
-                        <textarea name="address" rows="2" required class="w-full p-3 rounded-xl border-2 border-transparent bg-white shadow-sm focus:border-pink-300 outline-none text-sm resize-none"></textarea>
-                    </div>
-                    
+                    <div><label class="block text-[10px] font-bold text-gray-500 uppercase mb-1 ml-1">Address</label><textarea name="address" rows="2" required class="w-full p-3 rounded-xl border-2 border-transparent bg-white shadow-sm focus:border-pink-300 outline-none text-sm text-gray-800 font-bold resize-none"></textarea></div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">Pincode</label>
-                            <input type="text" name="pincode" required pattern="[0-9]{6}" class="w-full p-3 rounded-xl border-2 border-transparent bg-white shadow-sm focus:border-pink-300 outline-none text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1 ml-1">City</label>
-                            <input type="text" name="city" required class="w-full p-3 rounded-xl border-2 border-transparent bg-white shadow-sm focus:border-pink-300 outline-none text-sm">
-                        </div>
+                        <div><label class="block text-[10px] font-bold text-gray-500 uppercase mb-1 ml-1">Pincode</label><input type="text" name="pincode" required pattern="[0-9]{6}" class="w-full p-3 rounded-xl border-2 border-transparent bg-white shadow-sm focus:border-pink-300 outline-none text-sm text-gray-800 font-bold"></div>
+                        <div><label class="block text-[10px] font-bold text-gray-500 uppercase mb-1 ml-1">City</label><input type="text" name="city" required class="w-full p-3 rounded-xl border-2 border-transparent bg-white shadow-sm focus:border-pink-300 outline-none text-sm text-gray-800 font-bold"></div>
                     </div>
-                    
-                    <button type="submit" class="submit-btn btn-jelly w-full mt-4 py-3.5 rounded-xl font-bold text-base flex justify-center items-center gap-2 clickable shadow-lg">
-                        <span class="btn-text">Confirm Order ✨</span>
-                        <span class="btn-loader hidden"><i class="fa-solid fa-spinner fa-spin"></i></span>
-                    </button>
+                    <button type="submit" class="submit-btn btn-jelly w-full mt-4 py-3.5 rounded-xl font-bold text-base flex justify-center items-center gap-2 clickable shadow-lg"><span class="btn-text">Confirm Order ✨</span><span class="btn-loader hidden"><i class="fa-solid fa-spinner fa-spin"></i></span></button>
                 </form>
             </div>
+        </div>
+    </div>
+
+    <div id="lightbox" class="lightbox-overlay">
+        <div class="relative">
+            <button id="lightbox-close" class="absolute -top-10 right-0 text-white text-3xl clickable">✕</button>
+            <img id="lightbox-img" src="" class="lightbox-img">
         </div>
     </div>
 
